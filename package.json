@@ -1,0 +1,35 @@
+{
+  "name": "travel-bliss",
+  "version": "1.0.0",
+  "description": "Wp Project Group 7",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/webprogramminggroup7/Final-Project-Group-7.git"
+  },
+  "keywords": [
+    "travel-bliss"
+  ],
+  "author": "\"Parth Ambalkar , Bhargav Baleja , Shivani Raykar , Alokit Gupta\"",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/webprogramminggroup7/Final-Project-Group-7/issues"
+  },
+  "homepage": "https://github.com/webprogramminggroup7/Final-Project-Group-7#readme",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "hpp": "^0.2.3",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^6.0.13",
+    "morgan": "^1.10.0",
+    "nodemailer": "^6.7.2",
+    "slugify": "^1.6.3",
+    "validator": "^13.7.0"
+  }
+}
