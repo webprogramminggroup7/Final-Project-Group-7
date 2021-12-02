@@ -1,1 +1,1 @@
-This is a Torist Website by Group-7.
+This is a Tourist Website by Group-7.
