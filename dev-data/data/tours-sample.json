@@ -1,0 +1,19 @@
+[
+    {
+      "name": "New York Helicopter Tour",
+      "ratingsAverage": 5,
+      "ratingsQuantity": 213,
+      "images": ["helicopter_tour_image_1.jpg", "helicopter_tour_image_2.jpg", "helicopter_tour_image_3.jpg"],
+      "startDate": "2021-12-01,10:00",
+      "duration": 1,
+      "maxGroupSize": 5,
+      "difficulty": "easy",
+      "price": 244,
+      "summary": "Ultimate Manhattan Sightseeing",
+      "description": "Avoid the congestion of New York City down on the ground, and take to the sky to see Manhattan during this NYC helicopter tour. Catch sight of the Empire State Building, Statue of Liberty, Central Park, George Washington Bridge, and many other top attractions without standing in line or sitting in traffic.",
+      "imageCover": "helicopter.jpg",
+      "loacationInfo": ["HeliNY - Downtown Manhattan Heliport, 6 East River Piers, New York, NY 10004, USA","", "https://www.google.com/maps/place/HeliNY+-+Downtown+Manhattan+Heliport/@40.7014974,-74.0091868,15z/data=!4m5!3m4!1s0x0:0xfb71c98a2d8f7569!8m2!3d40.7014974!4d-74.0091868"]
+    }
+
+    ]
+  
