@@ -270,7 +270,7 @@ res.status(200).json({
 }
 
 const logout = (req, res) => {
-    res.cookie('jsonwebtoken', 'LoggedOutSuccesfully', {
+    res.cookie('jwt', 'LoggedOutSuccesfully', {
       expires: new Date(Date.now() + 15 * 1000),
       httpOnly: true
     });

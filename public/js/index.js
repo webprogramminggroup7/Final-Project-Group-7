@@ -3,6 +3,7 @@
 import { login} from './login';
 
 const loginForm = document.querySelector('.form--login');
+const logOutBtn = document.querySelector('.nav__el--logout');
 
 
 
@@ -16,3 +17,16 @@ if (loginForm)
 
 
 
+const logout = async () => {
+    try{
+      const res = await axios({
+        method: 'GET',
+        url: 'travel-bliss/users/logout'
+      });
+      if ((res.data.status = 'success')){
+        location.assign('/');
+      } //location.reload(true);
+    } catch(err){
+      showAlert('error', 'Error logging out! Try again.');
+    }
+}

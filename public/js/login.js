@@ -24,8 +24,27 @@ const login = async (email, password) => {
     // showAlert('error', err.response.data.message);
   }
 };
+
+const logout = async () => {
+  try{
+    const res = await axios({
+      method: 'GET',
+      url: 'travel-bliss/users/logout'
+    });
+    if ((res.data.status = 'success')){
+      alert('Logged out successfully!')
+      location.assign('/');
+    } //location.reload(true);
+  } catch(err){
+    showAlert('error', 'Error logging out! Try again.');
+  }
+}
+
 const loginForm = document.querySelector('.form--login');
 
+const logOutBtn = document.querySelector('.nav__el--logout');
+
+if (logOutBtn) logOutBtn.addEventListener('click', logout);
 
 
 if (loginForm)
@@ -37,3 +56,5 @@ if (loginForm)
     console.log(password)
     login(email, password);
   });
+
+
