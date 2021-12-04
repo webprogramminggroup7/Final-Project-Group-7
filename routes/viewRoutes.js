@@ -11,4 +11,8 @@ router.get("/tour/:slug",viewRoutes.tourViewPage)
 router.get('/login',viewRoutes.LoginForm)
 router.get("/me",authenticationUser.protectedRoute,viewRoutes.getAccountDetails)
 router.get("/createTour", authenticationUser.protectedRoute,viewRoutes.createNewTour)
+<<<<<<< HEAD
+=======
+
+>>>>>>> 66500cf5f873e4a2942e7fc765c0929d6a20b7a8
 module.exports = router

@@ -25,4 +25,9 @@ const email = document.getElementById('email').value;
 updateSettings({ name, email }, 'data');
 
       });
+<<<<<<< HEAD
 }
+=======
+}
+ 
+>>>>>>> 66500cf5f873e4a2942e7fc765c0929d6a20b7a8

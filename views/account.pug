@@ -38,7 +38,11 @@ block content
             .form__group.ma-bt-md
               label.form__label(for='email') Email address
               input#email.form__input(type='email', value=`${user.email}`, required, name='email')
+<<<<<<< HEAD
             .form_group.form_photo-upload
+=======
+            .form__group.form__photo-upload
+>>>>>>> 66500cf5f873e4a2942e7fc765c0929d6a20b7a8
               img.form__user-photo(src=`/img/users/${user.photo}`, alt='User photo')
               input.form__upload(type='file', accept='image/*', id='photo', name='photo')
               label(for='photo') Choose new photo

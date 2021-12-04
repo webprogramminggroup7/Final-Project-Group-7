@@ -74,7 +74,7 @@ const tourSchemaModel = new mongoose.Schema({
     default:Date.now(),
     select:false
     },
-    images:[String],
+    //images:[String],
     slug:String,
     guides:[
       {
