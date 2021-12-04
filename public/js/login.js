@@ -64,7 +64,7 @@ const logout = async () => {
       location.assign('/');
     } //location.reload(true);
   } catch(err){
-    showAlert('error', 'Error logging out! Try again.');
+    alert('error', 'Error logging out! Try again.');
   }
 }
 
