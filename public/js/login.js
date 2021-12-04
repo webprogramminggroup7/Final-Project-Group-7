@@ -25,6 +25,32 @@ const login = async (email, password) => {
   }
 };
 
+const signup = async (email, name, password, passwordConfirm) => {
+  try {
+    const res = await axios({
+      method: 'POST',
+      url: '/travel-bliss/users/signup',
+      data: {
+        email,
+        name,
+        password,
+        passwordConfirm
+      }
+    });
+    console.log(res.data)
+    if (res.data.status === 'Successfully signed up New User') {
+      alert('Succesfully created user')
+  //   showAlert('success', 'Logged in successfully!');
+    window.setTimeout(() => {
+      location.assign('/');
+    }, 1500);
+  }
+} catch (err) {
+    alert(err)
+  // showAlert('error', err.response.data.message);
+}
+};
+
 const logout = async () => {
   try{
     const res = await axios({
@@ -68,6 +94,8 @@ const loginForm = document.querySelector('.form--login');
 
 const logOutBtn = document.querySelector('.nav__el--logout');
 
+const SignUpForm = document.querySelector('.form--signup');
+
 if (logOutBtn) logOutBtn.addEventListener('click', logout);
 
 const createForm = document.querySelector('.form--create');
@@ -82,6 +110,19 @@ if (loginForm)
     login(email, password);
   });
 
+if (SignUpForm)
+  SignUpForm.addEventListener('submit', e => {
+    e.preventDefault();
+    const name = document.getElementById('name').value;
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('password').value;
+    const confirmPassword = document.getElementById('confirmPassword').value;
+    console.log(name);
+    console.log(email);
+    console.log(password);
+    console.log(confirmPassword);
+    signup(email, name, password, confirmPassword);
+  });
 
 if(createForm)
   createForm.addEventListener('submit', e => {
