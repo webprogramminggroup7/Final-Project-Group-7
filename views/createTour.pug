@@ -1,0 +1,33 @@
+extends base
+
+block content
+  main.main
+    .login-form
+      h2.heading-secondary.ma-bt-lg Create New Tour
+      form.form.form--create
+        .form__group
+          label.form__label(for='startDate1') Start Date 
+          input#startDate1.form__input(type='date', placeholder='Enter 1st start date of tour', required)
+        .form__group
+          label.form__label(for='name') Name
+          input#name.form__input(type='text', placeholder='Enter your name', required)
+        .form__group
+          label.form__label(for='duration') Duration
+          input#duration.form__input(type='number', placeholder='Enter tour Duration', required)
+        .form__group
+          label.form__label(for='maxGroupSize') Max Group Size
+          input#maxGroupSize.form__input(type='number', placeholder='Enter Max Group Size', required)
+        .form__group
+          label.form__label(for='difficulty') Difficulty
+          input#difficulty.form__input(type='text', placeholder='Enter tour difficulty', required)
+        .form__group
+          label.form__label(for='price') Price
+          input#price.form__input(type='number', placeholder='Enter Price for the tour', required)
+        .form__group
+          label.form__label(for='summary') Summary
+          input#summary.form__input(type='text', placeholder='Enter tour summary', required)
+        .form__group
+          label.form__label(for='description') Description
+          input#description.form__input(type='text', placeholder='Enter tour description', required)
+        .form__group
+          button.btn.btn--green Create Tour

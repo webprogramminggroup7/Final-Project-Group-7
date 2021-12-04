@@ -66,7 +66,7 @@ const tourSchemaModel = new mongoose.Schema({
     },
     imageCover:{
     type:String,
-    required:[true,"A tour must have acover image field"]
+    required:[false,"A tour must have acover image field"]
     },
     startDates:[Date],
     createdAt:{

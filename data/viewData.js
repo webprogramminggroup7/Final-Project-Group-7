@@ -38,9 +38,24 @@ const SignUpForm = async (req,res)=>{
         title: 'Create a new account'
       });
 }
+
+const createNewTour = async(req,res)=>{
+    res.status(200).render('createTour', {
+        title: 'Create a New Tour'
+      });
+}
+
+const getAccountDetails=async(req,res)=>{
+    res.status(200).render('account', {
+        title: 'Your Personal Account'
+      });
+}
+
 module.exports = {
     landingPage,
     tourViewPage,
     LoginForm,
-    SignUpForm
+    SignUpForm,
+    createNewTour,
+    getAccountDetails
 }
