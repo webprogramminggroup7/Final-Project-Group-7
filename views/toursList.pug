@@ -1,46 +1,4 @@
-extends base
-
-block content
-  
-  main.main 
-    .search 
-      input#search-input(type="text" placeholder="Search...")
-    .card-container-parent
-      .filter-sort-parent
-        .dropdown-parent
-          .dropdown
-            button.btn-primary.dropdown-filter-btn.dropdown-toggle(type='button' data-toggle='dropdown')
-              | Sort By
-            .dropdown-menu
-              button#most-popular.dropdown-item(role="button") Most Popular Ones
-              button#low-price.dropdown-item(role="button") Price: Low to High
-              button#high-price.dropdown-item(role="button") Price: High to Low
-              button#high-rating.dropdown-item(role="button") Rating: High to Low 
-              button#low-rating.dropdown-item(role="button") Rating: Low to High
-        .filter-parent
-          form#filter-form
-            | Price:
-            br
-            input(type='text' placeholder='MIN' id='min-price') 
-            input(type='text' placeholder='MAX' id='max-price')
-            br
-            br
-            | Ratings:
-            br
-            input(type='text' placeholder='MIN' id='min-ratings')
-            input(type='text' placeholder='MAX' id='max-ratings')
-            br
-            br
-            | Duration:
-            br
-            input(type='text' placeholder='MIN' id='min-duration')
-            input(type='text' placeholder='MAX' id='max-duration')
-            br
-            br 
-            button(type='submit') Go
-      #tour-page.card-container
-      
-        each tour in tours
+each tour in tours
           .card
             .card__header
               .card__picture
