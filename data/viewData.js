@@ -1,4 +1,5 @@
 const Tour = require("../models/tourSchemaModel")
+const Booking = require("../models/bookingSchemaModel")
 const landingPage = async (req,res)=>{
     try{
         const allTours = await Tour.find()
@@ -50,12 +51,28 @@ const getAccountDetails=async(req,res)=>{
         title: 'Your Personal Account'
       });
 }
+const getMyTours=async (req,res)=>{
+    try{
+        const bookings = await Booking.find({ user: req.user.id });
 
+        // 2) Find tours with the returned IDs
+        const tourIDs = bookings.map(el => el.tour);
+        const tours = await Tour.find({ _id: { $in: tourIDs } });
+      
+        res.status(200).render('overview', {
+          title: 'My Tours',
+          tours
+        });
+    }catch(err){
+        res.status(404).json({message:"Page NOT FOUND",error:err})
+    }
+}
 module.exports = {
     landingPage,
     tourViewPage,
     LoginForm,
     SignUpForm,
     createNewTour,
-    getAccountDetails
+    getAccountDetails,
+    getMyTours
 }
