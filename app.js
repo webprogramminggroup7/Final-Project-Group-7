@@ -10,6 +10,8 @@ const userRoutes = require("./routes/userRoutes")
 const reviewRoutes = require("./routes/reviewRoutes")
 const bookingRoutes = require("./routes/bookingRoutes")
 const viewRoutes = require("./routes/viewRoutes")
+const filterRoutes = require("./routes/filterRoutes")
+
 const app = express();
 app.enable('trust proxy');
 app.set('view engine','pug')
@@ -49,7 +51,13 @@ app.use('/',viewRoutes)
 app.use('/travel-bliss/tours',tourRoutes);
 app.use('/travel-bliss/users',userRoutes);
 app.use('/travel-bliss/reviews',reviewRoutes);
+<<<<<<< HEAD
 app.use("/travel-bliss/bookings",bookingRoutes)
+=======
+app.use('/filter', filterRoutes);
+
+
+>>>>>>> fa57de11c89bc053de35bd08ecd5e7f5d0b3fa59
 app.all("*",(req,res,next)=>{
     res.status(404).json({
         message:`No such Route ${req.originalUrl} Found on server`
