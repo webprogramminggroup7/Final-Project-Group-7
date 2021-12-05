@@ -107,10 +107,21 @@ const updateExistingReview = async(req,res)=>{
 
 }
 
+const getReviewsForUserID = async(req,res)=> {
+  try{
+    const allReviews = await Review.find({user:req.user.id});
+    return allReviews;
+  }catch(ex){
+    console.log(ex)
+  }
+ 
+}
+
  module.exports = {
      fetchAllReviews,
      createSingleReview,
      deleteSingleReview,
      updateExistingReview,
-     getSingleReview
+     getSingleReview,
+     getReviewsForUserID
  }
