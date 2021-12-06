@@ -20,6 +20,8 @@ const corsOptions ={
    credentials:true,            
    optionSuccessStatus:200,
 }
+
+
 app.use(cookieParser())
 
 app.use(cors(corsOptions)) 

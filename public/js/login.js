@@ -118,14 +118,15 @@ if (SignUpForm)
     const name = document.getElementById('name').value;
     const email = document.getElementById('email').value;
     const password = document.getElementById('password').value;
-    const image = document.getElementById('profile').file;
-    const confirmPassword = document.getElementById('confirmPassword').value;
+    const photo = document.getElementById('photo').files[0];
+    const passwordConfirm = document.getElementById('passwordConfirm').value;
 
     console.log(name);
     console.log(email);
+    console.log(photo);
     console.log(password);
-    console.log(confirmPassword);
-    signup(email, name, image, password, confirmPassword);
+    console.log(passwordConfirm);
+    signup(email, name, photo, password, passwordConfirm);
   });
 
   if(createForm)

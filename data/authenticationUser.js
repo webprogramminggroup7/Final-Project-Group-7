@@ -3,6 +3,24 @@ const crypto = require("crypto")
 const jwt = require("jsonwebtoken")
 const {promisify} = require("util")
 const sendEmailForPasswordReset = require("./emailforResetPassword")
+const multer = require("multer");
+
+const multerStorage = multer.diskStorage({
+    destination : (req, file, cb) => {
+        cb(null, 'public/img/users');
+    },
+    filename : (req, file, cb) => {
+        cb(null, file.fieldname + '=' + Date.now() + path.extname(file.originalname));
+    }
+})
+
+const upload = multer({
+    storage: multerStorage
+})
+
+exports.uploadUserPhoto = upload.single('photo');
+
+
 const cookie = {
     expires: new Date(
         Date.now() + process.env.COOKIE_EXPIRES_IN * 24 * 60 * 60 * 1000
@@ -10,6 +28,7 @@ const cookie = {
       httpOnly: true
 }
 const signup = async (req,res)=>{
+  console.log(req.file);
 try{
 RequestBodyObject = {
     email : req.body.email,
@@ -19,6 +38,8 @@ RequestBodyObject = {
     // passwordChangedAt:req.body.passwordChangedAt
     role:req.body.role
 }
+if(req.file) RequestBodyObject.photo = req.file.filename;
+
 const newUserSignUp = await User.create(RequestBodyObject)
 const JWT_TOKEN = jwt.sign({id:newUserSignUp._id,name:newUserSignUp.name},process.env.SECRET_JSON_WEB_TOKEN,{
     expiresIn:process.env.EXPIRES_IN_JWT

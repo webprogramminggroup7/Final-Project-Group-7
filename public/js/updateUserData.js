@@ -10,7 +10,7 @@ const updateSettings = async (data, type) => {
         url,
         data
       });
-  
+      console.log(res);
       if (res.data.status === 'success') {
         alert(`success'${type.toUpperCase()} updated successfully!`);
       }
@@ -22,12 +22,10 @@ if (userDataForm){
  e.preventDefault();
 const name = document.getElementById('name').value;
 const email = document.getElementById('email').value;
-updateSettings({ name, email }, 'data');
-
-      });
-<<<<<<< HEAD
+const photo = document.getElementsById('photo').file;
+console.log(name);
+console.log(email);
+console.log(photo);
+updateSettings({ name, email, photo}, 'data');
+});
 }
-=======
-}
- 
->>>>>>> 66500cf5f873e4a2942e7fc765c0929d6a20b7a8

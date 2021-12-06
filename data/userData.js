@@ -1,4 +1,20 @@
 const User =  require("./../models/userSchemaModel")
+const multer = require("multer");
+
+const multerStorage = multer.diskStorage({
+    destination : (req, file, cb) => {
+        cb(null, 'public/img/users');
+    },
+    filename : (req, file, cb) => {
+        cb(null, file.fieldname + '=' + Date.now() + path.extname(file.originalname));
+    }
+})
+
+const upload = multer({
+    storage: multerStorage
+})
+
+exports.uploadUserPhoto = upload.single('photo');
 
 const fetchAllUsers = async(req,res)=>{
     try{
@@ -77,11 +93,15 @@ const filterBodyObject = (object, ...specifiedFields) => {
   };
 
 const updateMyData = async(req,res)=>{
+
+  console.log(req.file);
+  console.log(req.body);
     try{
         if (req.body.password || req.body.passwordConfirm) {
             return res.status(400).json({message:"This Route is Not for Updating Password.Use /updatePassword for doing so"})
           }
           const filteredBody = filterBodyObject(req.body, 'name', 'email');
+          if(req.file) filteredBody.photo = req.file.filename;
 
           const updatedUserFromDatabase = await User.findByIdAndUpdate(req.user.id, filteredBody, {
             new: true,
