@@ -8,7 +8,10 @@ const cookieParser = require('cookie-parser')
 const tourRoutes = require("./routes/tourRoutes")
 const userRoutes = require("./routes/userRoutes")
 const reviewRoutes = require("./routes/reviewRoutes")
+const bookingRoutes = require("./routes/bookingRoutes")
 const viewRoutes = require("./routes/viewRoutes")
+const filterRoutes = require("./routes/filterRoutes")
+
 const app = express();
 app.enable('trust proxy');
 app.set('view engine','pug')
@@ -50,6 +53,9 @@ app.use('/',viewRoutes)
 app.use('/travel-bliss/tours',tourRoutes);
 app.use('/travel-bliss/users',userRoutes);
 app.use('/travel-bliss/reviews',reviewRoutes);
+app.use("/travel-bliss/bookings",bookingRoutes)
+app.use('/filter', filterRoutes);
+
 
 app.all("*",(req,res,next)=>{
     res.status(404).json({
