@@ -1399,3 +1399,27 @@ body {
   line-height: 3rem;
   border-radius: 15px 15px;
 }
+.review-data{
+  background-color: rgb(180, 237, 170);
+  padding: 10px;
+  color: black;
+  font-size: 13px;
+  font-weight: 400;
+  flex:1
+}
+.review-container{
+  display: flex;
+  margin-bottom: 2rem;
+  min-height: 70px;
+}
+.review-edit{
+  font-size: 13px;
+  display: flex;
+    /* align-items: center; */
+  justify-content: center;
+  flex-direction: column;
+  margin-left: 10px;
+}
+.reviews-container-parent{
+  margin-top: 3rem;
+}

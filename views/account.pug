@@ -14,7 +14,7 @@ block content
         ul.side-nav
           +navItem('#', 'Settings', 'settings', true)
           +navItem('/my-tours', 'My bookings', 'briefcase')
-          +navItem('#', 'My reviews', 'star')
+          +navItem('#my_reviews', 'My reviews', 'star')
           +navItem('#', 'Billing', 'credit-card')
 
         - if (user.role === 'admin')
@@ -25,8 +25,8 @@ block content
               //+navItem('#', 'Manage users', 'users')
               //+navItem('#', 'Manage reviews', 'star')
               //+navItem('#', 'Manage bookings', 'briefcase')
-
-      .user-view__content
+      
+      #view-page.user-view__content
         .user-view__form-container
           h2.heading-secondary.ma-bt-md Your account settings
           
