@@ -1,9 +1,5 @@
 const updateSettings = async (name, email) => {
     try {
-      // const url =
-      //   type === 'password'
-      //     ? '/travel-bliss/users/updatePassword'
-      //     : '/travel-bliss/users/updateMyData';
   
       const res = await axios({
         method: 'PATCH',
@@ -74,4 +70,15 @@ const updatePassword = async (passwordCurrent, passwordConfirm,password) => {
   updatePassword( passwordCurrent,passwordConfirm,password );
         });
   }
-  
+//update PHooto
+
+
+
+
+
+
+
+
+
+
+
