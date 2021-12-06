@@ -25,18 +25,12 @@ const login = async (email, password) => {
   }
 };
 
-const signup = async (email, name, photo, password, passwordConfirm) => {
+const signup = async (data) => {
   try {
     const res = await axios({
       method: 'POST',
       url: '/travel-bliss/users/signup',
-      data: {
-        email,
-        name,
-        photo,
-        password,
-        passwordConfirm
-      }
+      data
     });
     console.log(res.data)
     if (res.data.status === 'Successfully signed up New User') {
@@ -115,18 +109,14 @@ if (loginForm)
 if (SignUpForm)
   SignUpForm.addEventListener('submit', e => {
     e.preventDefault();
-    const name = document.getElementById('name').value;
-    const email = document.getElementById('email').value;
-    const password = document.getElementById('password').value;
-    const photo = document.getElementById('photo').files[0];
-    const passwordConfirm = document.getElementById('passwordConfirm').value;
+    const form = new FormData();
+    form.append('name',document.getElementById('name').value);
+    form.append('email',document.getElementById('email').value);
+    form.append('photo',document.getElementById('photo').files[0]);
+    form.append('password',document.getElementById('password').value);
+    form.append('passwordConfirm',document.getElementById('passwordConfirm').value);
 
-    console.log(name);
-    console.log(email);
-    console.log(photo);
-    console.log(password);
-    console.log(passwordConfirm);
-    signup(email, name, photo, password, passwordConfirm);
+    signup(form);
   });
 
   if(createForm)

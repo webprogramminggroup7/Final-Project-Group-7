@@ -1,12 +1,10 @@
-const updateSettings = async (name, email) => {
+const updateSettings = async (data) => {
     try {
   
       const res = await axios({
         method: 'PATCH',
         url:'/travel-bliss/users/updateMyData',
-        data:{
-          name,email
-        }
+        data
       });
       // console.log(res)
       if (res.data.status === 'successful in updating the name or email') {
@@ -20,10 +18,12 @@ const userDataForm = document.querySelector('.form-user-data')
 if (userDataForm){
   userDataForm.addEventListener('submit', e => {
  e.preventDefault();
-const name = document.getElementById('name').value;
-const email = document.getElementById('email').value;
+ const form = new FormData();
+ form.append('name', document.getElementById('name').value);
+ form.append('email', document.getElementById('email').value);
+ form.append('photo', document.getElementById('photo').files[0]); 
 // console.log(name,email)
-updateSettings( name, email);
+updateSettings(form);
 
       });
 }

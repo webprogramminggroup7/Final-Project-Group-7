@@ -10,12 +10,22 @@ const multerStorage = multer.diskStorage({
         cb(null, 'public/img/users');
     },
     filename : (req, file, cb) => {
-        cb(null, file.fieldname + '=' + Date.now() + path.extname(file.originalname));
+        const ext = file.mimetype.split('/')[1];
+        cb(null, `user-${req.user.id}-${Date.now()}.${ext}`);
     }
 })
 
+const multerFilter = (req, file, cb) => {
+  if(file.mimetype.startsWith('image')) {
+    cb(null, true);
+  } else {
+    cb('Not an image', false);
+  }
+}
+
 const upload = multer({
-    storage: multerStorage
+    storage: multerStorage,
+    fileFilter: multerFilter
 })
 
 exports.uploadUserPhoto = upload.single('photo');
@@ -33,12 +43,12 @@ try{
 RequestBodyObject = {
     email : req.body.email,
     name  : req.body.name,
+    photo : req.file.filename,
     password : req.body.password,
     passwordConfirm : req.body.passwordConfirm,
     // passwordChangedAt:req.body.passwordChangedAt
     role:req.body.role
 }
-if(req.file) RequestBodyObject.photo = req.file.filename;
 
 const newUserSignUp = await User.create(RequestBodyObject)
 const JWT_TOKEN = jwt.sign({id:newUserSignUp._id,name:newUserSignUp.name},process.env.SECRET_JSON_WEB_TOKEN,{
