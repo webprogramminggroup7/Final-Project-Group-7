@@ -24,7 +24,7 @@ const logout = async () => {
         url: 'travel-bliss/users/logout'
       });
       if ((res.data.status = 'success')){
-        location.assign('/');
+        location.assign('/all-tours');
       } //location.reload(true);
     } catch(err){
       showAlert('error', 'Error logging out! Try again.');

@@ -16,7 +16,7 @@ const login = async (email, password) => {
         alert('Logged in successfully!')
     //   showAlert('success', 'Logged in successfully!');
       window.setTimeout(() => {
-        location.assign('/');
+        location.assign('/all-tours');
       }, 1500);
     }
   } catch (err) {
@@ -37,7 +37,7 @@ const signup = async (data) => {
       alert('Succesfully created user')
   //   showAlert('success', 'Logged in successfully!');
     window.setTimeout(() => {
-      location.assign('/');
+      location.assign('/all-tours');
     }, 1500);
   }
 } catch (err) {
@@ -55,7 +55,7 @@ const logout = async () => {
     });
     if ((res.data.status = 'success')){
       alert('Logged out successfully!')
-      location.assign('/');
+      location.assign('/all-tours');
     } //location.reload(true);
   } catch(err){
     alert('error', 'Error logging out! Try again.');
@@ -76,7 +76,7 @@ const create = async (startDates,name,duration,maxGroupSize,difficulty,price,sum
         alert('New tour has been created!')
     //   showAlert('success', 'Logged in successfully!');
       window.setTimeout(() => {
-        location.assign('/');
+        location.assign('/all-tours');
       }, 1500);
     }
   } catch (err) {

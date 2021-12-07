@@ -7,7 +7,10 @@ const router = express.Router()
 
 // router.use(authenticationUser.isLoggedIn)
 router.get('/signup',viewRoutes.SignUpForm)
-router.get("/",authenticationUser.isLoggedIn,viewRoutes.landingPage)
+router.get("/all-tours",authenticationUser.isLoggedIn,viewRoutes.landingPage)
+router.get("/", (req, res) => {
+  res.render('welcome');
+})
 router.get("/tour/:slug",authenticationUser.isLoggedIn,viewRoutes.tourViewPage)
 router.get('/login',authenticationUser.isLoggedIn,viewRoutes.LoginForm)
 router.get("/me",authenticationUser.protectedRoute,viewRoutes.getAccountDetails)
