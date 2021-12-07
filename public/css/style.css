@@ -1423,3 +1423,21 @@ body {
 .reviews-container-parent{
   margin-top: 3rem;
 }
+#review-input{
+  width: 100%;
+}
+.modal-header{
+  height: 60px;
+}
+.modal-title{
+  font-size: 24px;
+}
+.modal-header .close{
+  margin-top: -30px !important;
+}
+
+#review-input{
+  padding-left: 6px;
+  font-size: 16px;
+  font-family: sans-serif;
+}
