@@ -1,8 +1,13 @@
 const express = require("express")
 const userData = require("../data/userData")
-const authenticationUser = require("../data/authenticationUser")
+const authenticationUser = require("../data/authenticationUser");
+const path = require("path");
 const router = express.Router()
-router.post("/signup",authenticationUser.signup)
+const multer = require("multer");
+
+const upload = multer({dest : 'public/img/users'})
+
+router.post("/signup",upload.single("photo"), authenticationUser.signup);
 router.post("/login",authenticationUser.login)
 router.get('/logout', authenticationUser.logout);
 router.post("/forgotPassword",authenticationUser.forgotPassword)
@@ -11,7 +16,7 @@ router.patch("/resetPassword/:token",authenticationUser.resetPassword)
 router.patch("/updatePassword",authenticationUser.protectedRoute,authenticationUser.updatePassword)
 
 router.get("/me",authenticationUser.protectedRoute,userData.getMe,userData.getSingleUser)
-router.patch("/updateMyData",authenticationUser.protectedRoute,userData.updateMyData)
+router.patch("/updateMyData", upload.single('photo'), authenticationUser.protectedRoute,userData.updateMyData)
 
 router.delete('/deleteMe', authenticationUser.protectedRoute,userData.deleteMyData);
 

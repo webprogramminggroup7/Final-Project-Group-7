@@ -1,4 +1,30 @@
 const User =  require("./../models/userSchemaModel")
+const multer = require("multer");
+
+const multerStorage = multer.diskStorage({
+    destination : (req, file, cb) => {
+        cb(null, 'public/img/users');
+    },
+    filename : (req, file, cb) => {
+        const ext = file.mimetype.split('/')[1];
+        cb(null, `user-${req.user.id}-${Date.now()}.${ext}`);
+    }
+})
+
+const multerFilter = (req, file, cb) => {
+  if(file.mimetype.startsWith('image')) {
+    cb(null, true);
+  } else {
+    cb('Not an image', false);
+  }
+}
+
+const upload = multer({
+    storage: multerStorage,
+    fileFilter: multerFilter
+})
+
+exports.uploadUserPhoto = upload.single('photo');
 
 const fetchAllUsers = async(req,res)=>{
     try{
@@ -77,12 +103,16 @@ const filterBodyObject = (object, ...specifiedFields) => {
   };
 
 const updateMyData = async(req,res)=>{
+
+  console.log(req.file);
+  console.log(req.body);
     try{
         if (req.body.password || req.body.passwordConfirm) {
             return res.status(400).json({message:"This Route is Not for Updating Password.Use /updatePassword for doing so"})
           }
           const filteredBody = filterBodyObject(req.body, 'name', 'email');
-
+          if(req.file) filteredBody.photo = req.file.filename;
+          console.log(filteredBody);
           const updatedUserFromDatabase = await User.findByIdAndUpdate(req.user.id, filteredBody, {
             new: true,
             runValidators: true

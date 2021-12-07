@@ -1,33 +1,84 @@
-const updateSettings = async (data, type) => {
+const updateSettings = async (data) => {
     try {
-      const url =
-        type === 'password'
-          ? '/travel-bliss/users/updatePassword'
-          : '/travel-bliss/users/updateMyData';
   
       const res = await axios({
         method: 'PATCH',
-        url,
+        url:'/travel-bliss/users/updateMyData',
         data
       });
-  
-      if (res.data.status === 'success') {
-        alert(`success'${type.toUpperCase()} updated successfully!`);
+      // console.log(res)
+      if (res.data.status === 'successful in updating the name or email') {
+        alert(`successfully updated updated successfully!`);
       }
     } catch (err) {
-      alert(err.response.data.message);
+      console.log(err.response.data.message.message)
+      alert(err.response.data.message.message);
     }}
+const userDataForm = document.querySelector('.form-user-data')
 if (userDataForm){
   userDataForm.addEventListener('submit', e => {
  e.preventDefault();
-const name = document.getElementById('name').value;
-const email = document.getElementById('email').value;
-updateSettings({ name, email }, 'data');
+ const form = new FormData();
+ form.append('name', document.getElementById('name').value);
+ form.append('email', document.getElementById('email').value);
+ form.append('photo', document.getElementById('photo').files[0]); 
+// console.log(name,email)
+updateSettings(form);
 
       });
-<<<<<<< HEAD
 }
-=======
-}
- 
->>>>>>> 66500cf5f873e4a2942e7fc765c0929d6a20b7a8
+const updatePassword = async (passwordCurrent, passwordConfirm,password) => {
+  try {
+    // const url =
+    //   type === 'password'
+    //     ? '/travel-bliss/users/updatePassword'
+    //     : '/travel-bliss/users/updateMyData';
+
+    const res = await axios({
+      method: 'PATCH',
+      url:'/travel-bliss/users/updatePassword',
+      data:{
+        passwordConfirm,passwordCurrent,password
+      }
+    });
+    // console.log(res)
+    if (res.data.status === 'Succesfully Logged In') {
+      alert(`successfully updated the Password!`);
+    }else{
+      alert(`${res.data.message}!`);
+
+    }
+    console.log(res.data.message)
+  } catch (err) {
+    if(err.response.data.message==="Your current password is wrong"){
+      alert(err.response.data.message);
+
+    }else{
+      alert(err.response.data.message.message);
+    }
+    console.log(err.response.data.message)
+  }}
+  const userPasswordForm = document.querySelector('.form-user-password')
+  if (userPasswordForm){
+    userPasswordForm.addEventListener('submit', e => {
+   e.preventDefault();
+  const passwordCurrent= document.getElementById('password-current').value;
+  const password = document.getElementById('password').value;
+
+  const passwordConfirm = document.getElementById('password-confirm').value;
+  // console.log(name,email)
+  updatePassword( passwordCurrent,passwordConfirm,password );
+        });
+  }
+//update PHooto
+
+
+
+
+
+
+
+
+
+
+
