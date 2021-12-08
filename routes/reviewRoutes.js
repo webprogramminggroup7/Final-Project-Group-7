@@ -13,7 +13,7 @@ router.get("/",authenticationUser.protectedRoute, async(req, res)=>{
         const tourId = req.params.tourId;
         reviewChecking.NotStringOrEmptyString(tourId, "Tour Id");
 
-        const allReviews = reviewData.fetchAllReviews(req, res);
+        const allReviews = await reviewData.fetchAllReviews(req, res);
         res.status(200).json({
             status:"successful got all the reviews",
             totalNumberofReviews:allReviews.length,
@@ -53,7 +53,7 @@ router.post("/",authenticationUser.protectedRoute,authenticationUser.OnlyGiveAcc
             return;
         }
 
-        const createdNewReview = reviewData.createSingleReview(req, res);
+        const createdNewReview = await reviewData.createSingleReview(req, res);
         res.status(201).json({
             status:"successful created new Review",
             data:{
@@ -82,7 +82,6 @@ router.patch("/:id",authenticationUser.protectedRoute,authenticationUser.OnlyGiv
     try{
         const {rating, review} = req.body;
         const reviewId = req.params.id;
-
         reviewChecking.checkInt(rating, "Rating");
         reviewChecking.NotStringOrEmptyString(review, "Review");
         reviewChecking.NotStringOrEmptyString(reviewId, "Review Id");
@@ -96,7 +95,7 @@ router.patch("/:id",authenticationUser.protectedRoute,authenticationUser.OnlyGiv
             return;
         }
 
-        const updateReview = reviewData.updateExistingReview(req, res);
+        const updateReview = await reviewData.updateExistingReview(req, res);
         res.status(200).json({
             status: 'successfully updated the Review',
             data: {
@@ -120,7 +119,7 @@ router.delete("/:id",authenticationUser.protectedRoute,authenticationUser.OnlyGi
         const id = req.params.id;
         reviewChecking.checkInt(id, "Review Id");
 
-        const deletedReview = reviewData.deleteSingleReview(req, res);
+        const deletedReview = await reviewData.deleteSingleReview(req, res);
         res.status(200).json({
             status: 'successfully deleted Review with id'+ID
         });

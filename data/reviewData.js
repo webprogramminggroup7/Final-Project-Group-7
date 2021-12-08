@@ -4,6 +4,7 @@ const reviewChecking = require('../errorHandling/review');
 
 const fetchAllReviews = async (req,res) =>{
     const tourId = req.params.tourId;
+    ObjectId(tourId);
     reviewChecking.NotStringOrEmptyString(tourId); 
      filter = {}
      if(req.params.tourId){
