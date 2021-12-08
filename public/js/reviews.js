@@ -55,6 +55,14 @@
 
             $('#save-review-changes').on('click', function(event){
                 let newReview = $('#review-input').val();
+                    reviewError = $('#review-error');
+
+                if(!newReview || newReview.trim() < 1){
+                    reviewError.text('Please enter a valid string.');
+                    reviewError.show();
+                    return;
+                }  
+
                 let requestConfig = {
                     method: 'PATCH',
                     url: 'travel-bliss/reviews/'+review_id,

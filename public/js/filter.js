@@ -171,7 +171,7 @@ const checkInt=(num) => {
         if (event.keyCode === 13) {
             event.preventDefault();
             var searchValue = searchInput.val();
-            if(searchValue.trim() < 1){
+            if(!searchValue || searchValue.trim() < 1){
                 alert("Please provide a valid search input");
                 return;
             }
