@@ -1,6 +1,62 @@
 const Tour = require("../models/tourSchemaModel")
 const apiFilterSortLimitPaginate = require("./apiFilterSortLimitPaginate");
+const sharp = require('sharp');
+const multer = require("multer");
+
+const multerStorage = multer.memoryStorage();
+
+const multerFilter = (req, file, cb) => {
+  if(file.mimetype.startsWith('image')) {
+    cb(null, true);
+  } else {
+    cb('Not an image', false);
+  }
+}
+
+const upload = multer({
+    storage: multerStorage,
+    fileFilter: multerFilter
+})
+
+const uploadTourImages = upload.fields([
+  {name : 'imageCover', maxCount : 1},
+  {name : 'images', maxCount : 3},
+  {name : 'locationImage', maxCount : 1}
+]);
 // const apiFilterSortLimitPaginate = require("./apiFilterSortLimitPaginate");
+
+const resizeTourImages = async(req, res, next) => {
+  console.log(req.files);
+  if(!req.files.imageCover || !req.files.images || !req.files.locationImage) return next();
+
+  req.body.imageCover = `tour-${req.params.id}-${Date.now()}-cover.jpeg`;
+  await sharp(req.files.imageCover[0].buffer)
+  .toFormat('jpeg')
+  .jpeg({quality: 90})
+  .toFile(`public/img/tours/${req.body.imageCover}`);
+
+  req.body.locationImage = `tour-${req.params.id}-${Date.now()}-cover.jpeg`;
+  await sharp(req.files.locationImage[0].buffer)
+  .toFormat('jpeg')
+  .jpeg({quality: 90})
+  .toFile(`public/img/location/${req.body.locationImage}`);
+
+  req.body.images = [];
+
+  await Promise.all(
+    req.files.images.map(async(file, i) => {
+      const filename = `tour-${req.params.id}-${Date.now()}-${i + 1}.jpeg`;
+
+      await sharp(file.buffer)
+      .toFormat('jpeg')
+      .jpeg({quality: 90})
+      .toFile(`public/img/tours/${filename}`);
+
+      req.body.images.push(filename);
+    })
+  );
+  next();
+};
 
 const fetchAllTours = async (req,res) =>{
    try{
@@ -24,6 +80,7 @@ res.status(200).json({
 const createSingleTour = async (req,res) => {
 try{
 tourBody = req.body
+console.log(tourBody);
 const createdNewTour = await Tour.create(tourBody)
 res.status(201).json({
     status:"successful created new tour",
@@ -152,5 +209,7 @@ module.exports = {
     updateExistingTour,
     deleteSingleTour,
     top5MostPopularTours,
-    getTourStatsLikeAverageRatingsAvgPriceminPriceMaxPrice
+    getTourStatsLikeAverageRatingsAvgPriceminPriceMaxPrice,
+    uploadTourImages,
+    resizeTourImages
 }
