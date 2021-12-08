@@ -1,5 +1,6 @@
 const User =  require("./../models/userSchemaModel")
 const multer = require("multer");
+const errorChecking = require('../errorHandling/globalErrorChecking')
 
 const multerStorage = multer.diskStorage({
     destination : (req, file, cb) => {
@@ -12,11 +13,11 @@ const multerStorage = multer.diskStorage({
 })
 
 const multerFilter = (req, file, cb) => {
-  if(file.mimetype.startsWith('image')) {
-    cb(null, true);
-  } else {
-    cb('Not an image', false);
-  }
+    if(file.mimetype.startsWith('image')) {
+      cb(null, true);
+    } else {
+      cb('Not an image', false);
+    }
 }
 
 const upload = multer({
@@ -36,51 +37,63 @@ const fetchAllUsers = async(req,res)=>{
             totalNumberofUsers:allUsers.length,
             data:allUsers
         })
-           }catch(error){
+      }catch(error){
             res.status(404).json({
             status:"Failed to get all users",
             message:error
             })
-           }
+      }
 }
+
 const createSingleUser = async(req,res)=>{
-res.status(500).json({
-    status:"Error",
-    message:"This Route is not yet implemented .use Signup route to createUser"
-})
+      res.status(500).json({
+          status:"Error",
+          message:"This Route is not yet implemented .use Signup route to createUser"
+      })
 }
+
 const getSingleUser = async(req,res)=>{
     try {
         ID = req.params.id
+        errorChecking.NotStringOrEmptyString(req.params.id, "User Id");
+        ObjectId(ID);
+
         const SingleUser = await User.findById(ID)
         console.log(SingleUser)
         if(!SingleUser){
-            return res.status(404).json({
-                status: 'fail to get single user'
-              });
+            throw {code:400, message: 'fail to get single user'};
         }
+
         res.status(200).json({
           status: 'successful in getting single user',
           data: {
             user:SingleUser
           }
         });
-      } catch (error) {
-       return  res.status(404).json({
-          status: 'fail to get single user',
-          message: error
+      } catch (ex) {
+        if(ex.code){
+          res.status(ex.code).json({error: ex.message});
+          return;
+          }
+        res.status(500).json({
+          message: ex
         });
       }
 }
+
 const updateExistingUser = async(req,res)=>{
 
 }
+
 const getMe = (req,res,next)=>{
     req.params.id = req.user.id
     next()
 }
+
 const deleteUser = async(req,res)=>{
     try{
+        errorChecking.NotStringOrEmptyString(req.params.id, "User Id");
+        ObjectId(req.params.id);
         const UserFromDatabase =  await User.findByIdAndUpdate(req.params.id, { active: false });
         if(!UserFromDatabase){
         return res.status(404).json({message:"No document found with that id"})
@@ -90,17 +103,24 @@ const deleteUser = async(req,res)=>{
          status: 'successful in Making user inactive data',
          data: null
         })
-     }catch(err){
-        return res.status(401).json({message:err})
+     }catch(ex){
+      if(ex.code){
+        res.status(ex.code).json({error: ex.message});
+        return;
+        }
+      res.status(500).json({
+        message: ex
+      });
      }
 }
+
 const filterBodyObject = (object, ...specifiedFields) => {
     const newObject = {};
     Object.keys(object).forEach(element => {
       if (specifiedFields.includes(element)) newObject[element] = object[element];
     });
     return newObject;
-  };
+};
 
 const updateMyData = async(req,res)=>{
 
@@ -129,15 +149,23 @@ const updateMyData = async(req,res)=>{
     }
 }
 const deleteMyData = async (req,res) =>{
-try{
-   const UserFromDatabase =  await User.findByIdAndUpdate(req.user.id, { active: false });
-   res.status(204).json({
-    status: 'successful in Making user inactive data',
-    data: null
-   })
-}catch(err){
-   res.status(401).json({message:err})
-}
+    try{
+        errorChecking.NotStringOrEmptyString(req.user.id, "User Id");
+        ObjectId(req.user.id);
+      const UserFromDatabase =  await User.findByIdAndUpdate(req.user.id, { active: false });
+      res.status(204).json({
+        status: 'successful in Making user inactive data',
+        data: null
+      })
+    }catch (ex) {
+      if(ex.code){
+        res.status(ex.code).json({error: ex.message});
+        return;
+        }
+      res.status(500).json({
+        message: ex
+      });
+    }
 }
 module.exports = {
     fetchAllUsers,
