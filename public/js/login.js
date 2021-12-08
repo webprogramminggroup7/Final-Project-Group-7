@@ -1,7 +1,4 @@
-// import axios from 'axios';
-// const { showAlert } =require('./alerts');
-
-const login = async (email, password) => {
+const loginFunction = async (email, password) => {
   try {
     const res = await axios({
       method: 'POST',
@@ -62,14 +59,12 @@ const logout = async () => {
   }
 }
 
-const create = async (startDates,name,duration,maxGroupSize,difficulty,price,summary,description) => {
+const create = async (data) => {
   try{
     const res = await axios({
       method: 'POST',
       url: '/travel-bliss/tours',
-      data: {
-        startDates:[startDates], name, duration, maxGroupSize, difficulty, price,summary,description
-      }
+      data
     });
     console.log(res.data)
     if (res.data.status === 'successful created new tour') {
@@ -81,7 +76,6 @@ const create = async (startDates,name,duration,maxGroupSize,difficulty,price,sum
     }
   } catch (err) {
     console.log(err.response)
-    alert(err.res.data.message)
   }
 };
 
@@ -103,7 +97,8 @@ if (loginForm)
     const password = document.getElementById('password').value;
     console.log(email)
     console.log(password)
-    login(email, password);
+
+    loginFunction(email, password);
   });
 
 if (SignUpForm)
@@ -122,15 +117,20 @@ if (SignUpForm)
   if(createForm)
   createForm.addEventListener('submit', e => {
     e.preventDefault();
-    const startDates = document.getElementById('startDate1').value
-    const name = document.getElementById('name').value
-    const duration = document.getElementById('duration').value
-    const maxGroupSize = document.getElementById('maxGroupSize').value
-    const difficulty = document.getElementById('difficulty').value
-    const price = document.getElementById('price').value
-    const summary = document.getElementById('summary').value
-    const description = document.getElementById('description').value
-    //const difficulty = document.getElementById('difficulty')
-    create(startDates,name,duration,maxGroupSize,difficulty,price,summary,description);
+    const form = new FormData();
+    form.append('startDates', document.getElementById('startDates').value)
+    form.append('name', document.getElementById('name').value)
+    form.append('duration', document.getElementById('duration').value)
+    form.append('maxGroupSize', document.getElementById('maxGroupSize').value)
+    form.append('difficulty', document.getElementById('difficulty').value)
+    form.append('price', document.getElementById('price').value)
+    form.append('summary', document.getElementById('summary').value)
+    form.append('description', document.getElementById('description').value)
+    form.append('locationInfo', document.getElementById('locationInfo').value)
+    form.append('imageCover', document.getElementById('imageCover').files[0])
+    form.append('images', document.getElementById('images').files)
+    form.append('locationImage', document.getElementById('locationImage').files[0])
+    console.log(form);
+    create(form);
   });
 

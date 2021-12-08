@@ -38,6 +38,8 @@ block content
             br
             br 
             button(type='submit') Go
+          .error-class
+            p#filter-error(hidden)
       #tour-page.card-container
       
         each tour in tours
@@ -59,7 +61,7 @@ block content
               .card__data
                 svg.card__icon
                   use(xlink:href='/img/icons.svg#icon-calendar')
-                span= tour.startDates[0].toLocaleString('en-us', {month: 'long', year: 'numeric'})
+                //span= tour.startDates[0].toLocaleString('en-us', {month: 'long', year: 'numeric'})
               .card__data
                 svg.card__icon
                   use(xlink:href='/img/icons.svg#icon-flag')

@@ -15,10 +15,13 @@ router.get("/tour/:slug",authenticationUser.isLoggedIn,viewRoutes.tourViewPage)
 router.get('/login',authenticationUser.isLoggedIn,viewRoutes.LoginForm)
 router.get("/me",authenticationUser.protectedRoute,viewRoutes.getAccountDetails)
 router.get(
-    '/my-tours',
+    '/',
     bookingData.createBookingCheckout,
     authenticationUser.protectedRoute,
     viewRoutes.getMyTours
   );
 router.get("/createTour", authenticationUser.protectedRoute,viewRoutes.createNewTour)
+router.get("/updateTour", (req, res) => {
+  res.render('updateTour')
+})
 module.exports = router

@@ -68,13 +68,22 @@ const tourSchemaModel = new mongoose.Schema({
     type:String,
     required:[false,"A tour must have acover image field"]
     },
-    startDates:[Date],
+    startDates:{
+      type:Date
+    },
     createdAt:{
     type:Date,
     default:Date.now(),
     select:false
     },
     images:[String],
+    locationInfo: {
+      type: String,
+      required:[true, 'A tour must have a location']
+    },
+    locationImage:{
+      type: String
+    },
     slug:String,
     guides:[
       {
