@@ -33,7 +33,7 @@ router.get("/",authenticationUser.protectedRoute, async(req, res)=>{
 })
 
 //create single review
-router.post("/",authenticationUser.protectedRoute,authenticationUser.OnlyGiveAccessTo("user"), async(req, res)=>{
+router.post("/reviews/:tourId",authenticationUser.protectedRoute,authenticationUser.OnlyGiveAccessTo("user"), async(req, res)=>{
     try{
         const user = req.user.id;
         const tour = req.params.tourId

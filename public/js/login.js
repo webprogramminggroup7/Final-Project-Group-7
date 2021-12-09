@@ -1,3 +1,5 @@
+
+
 const loginFunction = async (email, password) => {
   try {
     const res = await axios({
@@ -133,15 +135,14 @@ const createReview = async(review,rating,idReview) => {
     }
     const res = await axios({
       method: 'POST',
-      url: `/travel-bliss/tours/${idReview}/reviews`,
+      url: `/travel-bliss/reviews/reviews/${idReview}`,
       data: {review,rating}
     });
-    console.log(res.data)
     if (res.data.status === 'successful created new Review') {
         alert('New review has been created!')
     //   showAlert('success', 'Logged in successfully!');
       window.setTimeout(() => {
-        location.assign('/');
+        location.assign('/all-tours');
       }, 1500);
     }
   }
