@@ -83,6 +83,7 @@ router.patch("/:id",authenticationUser.protectedRoute,authenticationUser.OnlyGiv
         const {rating, review} = req.body;
         const reviewId = req.params.id;
         reviewChecking.checkInt(rating, "Rating");
+        reviewChecking.checkRating(rating);
         reviewChecking.NotStringOrEmptyString(review, "Review");
         reviewChecking.NotStringOrEmptyString(reviewId, "Review Id");
         try{

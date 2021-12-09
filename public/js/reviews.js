@@ -40,6 +40,8 @@
 
             $('#editReviewModal').modal('show');
             $('#review-input').val("");
+            $('#rating-input').val("");
+            $('#review-error').hide();
             let requestConfig = {
                     method: 'GET',
                     url: 'travel-bliss/reviews/user'
@@ -51,12 +53,27 @@
                     review = reviews.find(review => review.id === review_id);
 
                      $('#review-input').val(review.review);
+                     $('#rating-input').val(review.rating);
             })
 
             $('#save-review-changes').on('click', function(event){
                 let newReview = $('#review-input').val();
+                    newRating = $('#rating-input').val();
                     reviewError = $('#review-error');
-
+                
+                
+                if(newRating && newRating.trim() > 0){
+                    let intRating = parseFloat(newRating); 
+                    if(intRating > 5 || intRating < 1){
+                        reviewError.text('Rating should be in between 1-5');
+                        reviewError.show();
+                        return;
+                    }
+                }else{
+                    reviewError.text('Please enter a valid number for rating.');
+                    reviewError.show();
+                    return;
+                }
                 if(!newReview || newReview.trim() < 1){
                     reviewError.text('Please enter a valid string.');
                     reviewError.show();
@@ -68,7 +85,7 @@
                     url: 'travel-bliss/reviews/'+review_id,
                     contentType: 'application/json',
                     data: JSON.stringify({
-                        "rating": review.rating,
+                        "rating": newRating,
                         "review": newReview
                     })
                 };

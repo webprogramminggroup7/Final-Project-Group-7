@@ -1,10 +1,12 @@
 .user-view__content
         .user-view__form-container
           h2.heading-secondary.ma-bt-md Your Reviews
-            #reviews-container-parent
+          #reviews-container-parent
                 each review in reviews
                             .review-container
-                                p.review-data= `${review.review}` 
+                                .review-data
+                                  p.class= `Rating - ${review.rating}`
+                                  p.class= `Review - ${review.review}` 
                                 .review-edit 
                                     p
                                         a.delete-review(href=`/delete/?id=${review._id}`) Delete
@@ -19,6 +21,12 @@
             button.close(type='button' data-dismiss='modal' aria-label='Close')
               span(aria-hidden='true') &times;
           .modal-body
+            label(for='rating-input') Rating 
+            br
+            input#rating-input(name='rating-input' placeholder="Enter a value between 1 to 5")
+            br
+            br
+            label(for='review-input') Review
             textarea#review-input(name='review-input' rows='4' cols='50')
             .error-class
               p#review-error(hidden)

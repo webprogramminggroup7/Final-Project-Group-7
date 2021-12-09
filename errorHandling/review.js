@@ -17,7 +17,7 @@ const NotStringOrEmptyString = (str, strName) =>{
 }
 
 const checkRating = (rating) =>{
-    if(rating < 0 || rating > 5){
+    if(rating < 1 || rating > 5){
         throw {code:400, message: `Rating should be in between 1-5`};
     }
 }
