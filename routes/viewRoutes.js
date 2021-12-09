@@ -21,7 +21,5 @@ router.get(
   viewRoutes.getMyTours
 );
 router.get("/createTour", authenticationUser.protectedRoute,viewRoutes.createNewTour)
-router.get("/updateTour", (req, res) => {
-  res.render('updateTour')
-})
+router.get("/updateTour/:slug", authenticationUser.isLoggedIn, viewRoutes.updateTour)
 module.exports = router

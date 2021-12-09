@@ -80,6 +80,26 @@ const create = async (data) => {
 };
 
 
+const update = async (data,id) => {
+  try{
+    const res = await axios({
+      method: 'PATCH',
+      url: `/travel-bliss/tours/${id}`,
+      data
+    });
+    console.log(res.data)
+    if (res.data.status === 'successfully updated the tour') {
+        alert('Tour has been updated!')
+    //   showAlert('success', 'Logged in successfully!');
+      window.setTimeout(() => {
+        location.assign('/all-tours');
+      }, 1500);
+    }
+  } catch (err) {
+    console.log(err.response)
+  }
+};
+
 const loginForm = document.querySelector('.form--login');
 
 const logOutBtn = document.querySelector('.nav__el--logout');
@@ -89,6 +109,8 @@ const SignUpForm = document.querySelector('.form--signup');
 if (logOutBtn) logOutBtn.addEventListener('click', logout);
 
 const createForm = document.querySelector('.form--create');
+
+const updateForm = document.querySelector('.form--update')
 
 if (loginForm)
   loginForm.addEventListener('submit', e => {
@@ -128,9 +150,36 @@ if (SignUpForm)
     form.append('description', document.getElementById('description').value)
     form.append('locationInfo', document.getElementById('locationInfo').value)
     form.append('imageCover', document.getElementById('imageCover').files[0])
-    form.append('images', document.getElementById('images').files)
+    let files = document.getElementById('images').files;
+    for (var i=0; i < files.length; i++) {
+      form.append('images', files[i]);
+    }
     form.append('locationImage', document.getElementById('locationImage').files[0])
     console.log(form);
     create(form);
+  });
+
+  if(updateForm)
+  updateForm.addEventListener('submit', e => {
+    e.preventDefault();
+    const id = document.getElementById('tourId').value
+    const form = new FormData();
+    form.append('startDates', document.getElementById('startDates').value)
+    form.append('name', document.getElementById('name').value)
+    form.append('duration', document.getElementById('duration').value)
+    form.append('maxGroupSize', document.getElementById('maxGroupSize').value)
+    form.append('difficulty', document.getElementById('difficulty').value)
+    form.append('price', document.getElementById('price').value)
+    form.append('summary', document.getElementById('summary').value)
+    form.append('description', document.getElementById('description').value)
+    form.append('locationInfo', document.getElementById('locationInfo').value)
+    form.append('imageCover', document.getElementById('imageCover').files[0])
+    let files = document.getElementById('images').files;
+    for (var i=0; i < files.length; i++) {
+      form.append('images', files[i]);
+    }
+    form.append('locationImage', document.getElementById('locationImage').files[0])
+    console.log(form);
+    update(form, id);
   });
 
