@@ -4,7 +4,9 @@ block content
   main.main
     .update-form
       h2.heading-secondary.ma-bt-lg Edit Tour
-      form.form.form--create
+      form.form.form--update
+        .form__group
+          input#tourId.form__input(type='hidden', value= `${tour.id}`)
         .form__group
           label.form__label(for='startDates') Start Date 
           input#startDates.form__input(type='date', value=`${tour.startDates}`, placeholder='Enter 1st start date of tour', required)

@@ -37,6 +37,7 @@ const resizeTourImages = async(req, res, next) => {
 
   req.body.locationImage = `tour-${req.params.id}-${Date.now()}-cover.jpeg`;
   await sharp(req.files.locationImage[0].buffer)
+  .resize(500, 300)
   .toFormat('jpeg')
   .jpeg({quality: 90})
   .toFile(`public/img/location/${req.body.locationImage}`);

@@ -64,6 +64,7 @@ router.get(
     
   }
 );
+router.get("/updateTour/:slug", authenticationUser.isLoggedIn, viewRoutes.updateTour)
 
 router.get('/signup', async (req,res)=>{
   res.status(200).render('signup', {
@@ -75,9 +76,6 @@ router.get("/", (req, res) => {
   res.status(200).render('welcome');
 })
 
-router.get("/updateTour", (req, res) => {
-  res.status(200).render('updateTour')
-})
 
 router.get('/login',authenticationUser.isLoggedIn,async (req,res)=>{
   res.status(200).render('login', {

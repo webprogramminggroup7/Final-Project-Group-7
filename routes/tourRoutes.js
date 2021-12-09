@@ -12,7 +12,7 @@ router.get("/",tourData.fetchAllTours)
 router.post("/",authenticationUser.protectedRoute,authenticationUser.OnlyGiveAccessTo("admin","lead-guide"),  tourData.uploadTourImages, tourData.resizeTourImages, tourData.createSingleTour)
 
 router.get("/:id",tourData.getSingleTour)
-router.patch("/:id",authenticationUser.protectedRoute,authenticationUser.OnlyGiveAccessTo("admin","lead-guide"),tourData.updateExistingTour)
+router.patch("/:id",authenticationUser.protectedRoute,authenticationUser.OnlyGiveAccessTo("admin","lead-guide"),tourData.uploadTourImages, tourData.resizeTourImages, tourData.updateExistingTour)
 router.delete("/:id",authenticationUser.protectedRoute,authenticationUser.OnlyGiveAccessTo('admin',"lead-guide"),tourData.deleteSingleTour)
 
 // router.post("/:tourId/reviews",authenticationUser.protectedRoute,authenticationUser.OnlyGiveAccessTo("user"),reviewData.createSingleReview)
