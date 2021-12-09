@@ -23,7 +23,7 @@ const checkInt=(num) => {
 }
 
 const validRatings = (rating) =>{
-    if(rating < 0 || rating > 6){
+    if(rating < 1 || rating > 6){
         return true;
     }
 }

@@ -1,0 +1,15 @@
+extends base
+
+block content
+  
+  main#testimonials-page.main 
+    if testimonials.length > 0
+      each testimonial in testimonials
+        .reviews__card
+          .profile
+            img.reviews__avatar-img(src=`/img/users/${testimonial.photo}`, alt=`${testimonial.name}`)
+            h6.reviews__user= `${testimonial.name}`
+          .reviews__text= `${testimonial.testimonial}`
+    else
+      h3.no-data No Testimonials to display
+    

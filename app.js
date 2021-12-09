@@ -11,6 +11,8 @@ const reviewRoutes = require("./routes/reviewRoutes")
 const bookingRoutes = require("./routes/bookingRoutes")
 const viewRoutes = require("./routes/viewRoutes")
 const filterRoutes = require("./routes/filterRoutes")
+const testimonialsRoutes = require("./routes/testimonialsRoutes")
+
 
 const app = express();
 app.enable('trust proxy');
@@ -55,6 +57,8 @@ app.use('/travel-bliss/users',userRoutes);
 app.use('/travel-bliss/reviews',reviewRoutes);
 app.use("/travel-bliss/bookings",bookingRoutes)
 app.use('/filter', filterRoutes);
+app.use("/travel-bliss/testimonials",testimonialsRoutes)
+
 
 
 app.all("*",(req,res,next)=>{
