@@ -1,6 +1,7 @@
 const stripe = require('stripe')("sk_test_51K2pNaFZd8aoQ8rCuMQhsydOIn2H11yI1QqtKj3DBlyn5WcB1d9NWqYp0xVFQIZoFqjRhE5qFwPcJuQ3Ez5T8CQd00qK5RCvhX");
 const Tour = require("../models/tourSchemaModel");
 const Booking = require("../models/bookingSchemaModel");
+const nodemailer = require('nodemailer')
 const getCheckoutSession =async (req, res) => {
     const tour = await Tour.findById(req.params.tourId);
     console.log(tour);
@@ -24,6 +25,32 @@ const getCheckoutSession =async (req, res) => {
         }
       ]
     });
+
+var transporter = nodemailer.createTransport({
+  host: 'smtp.gmail.com',
+  secure: true,
+  service: 'Gmail',
+
+  auth: {
+    user:'webprogramminggroup7',
+    pass:'WebProgramming1234!'
+  }
+});
+
+var mailOptions = {
+  from: 'webprogramminggroup7@gmail.com',
+  to: `${req.user.email}`,
+  subject: `Succesfully Booked The Tour ${tour.name} `,
+  text: ` Your Payment of ${tour.price} has been successfully completed and your tour has been booked succesfully by us .Enjoy your trip`
+};
+
+transporter.sendMail(mailOptions, function(error, info){
+  if (error) {
+    console.log(error);
+  } else {
+    console.log('Email sent: ' + info.response);
+  }
+});
     res.status(200).json({
       status: 'success',
       session
