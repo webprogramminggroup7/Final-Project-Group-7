@@ -121,6 +121,38 @@ const update = async (data,id) => {
   }
 };
 
+
+const createReview = async(review,rating,idReview) => {
+  try{
+    let reviewCheck = review.match(/^[0-9]+$/) != null
+    if(reviewCheck == true){
+      return alert('Review cannot contain only numbers')
+    }
+    if(rating<=0 || rating>5){
+      return alert('Rating must be between 1 to 5 inclusive')
+    }
+    const res = await axios({
+      method: 'POST',
+      url: `/travel-bliss/tours/${idReview}/reviews`,
+      data: {review,rating}
+    });
+    console.log(res.data)
+    if (res.data.status === 'successful created new Review') {
+        alert('New review has been created!')
+    //   showAlert('success', 'Logged in successfully!');
+      window.setTimeout(() => {
+        location.assign('/');
+      }, 1500);
+    }
+  }
+  catch(err){
+    if(err.response.data.message.keyPattern={tour: 1, user: 1}){
+      alert("User Has Already Given A Review For This Tour.No duplicate Allowed")
+    }
+  }
+}
+
+
 const loginForm = document.querySelector('.form--login');
 
 const logOutBtn = document.querySelector('.nav__el--logout');
@@ -129,9 +161,34 @@ const SignUpForm = document.querySelector('.form--signup');
 
 const deleteBtn = document.querySelector('.nav__el--delete')
 
+const addReviewBtn = document.querySelector('.nav__el--addReview')
+
+const closeReviewBtn = document.querySelector('.close')
+
+const reviewFormBtn = document.querySelector('.abc')
+
 if (logOutBtn) logOutBtn.addEventListener('click', logout);
 
 const createForm = document.querySelector('.form--create');
+
+const reviewForm = document.querySelector('.form--review');
+
+
+if(addReviewBtn)
+  addReviewBtn.addEventListener("click",function(){
+    document.querySelector('.bg_modal').style.display = 'flex';
+  });
+
+
+if(closeReviewBtn)
+  closeReviewBtn.addEventListener("click",function(){
+    document.querySelector('.bg_modal').style.display = 'none'
+  });
+
+  if(reviewFormBtn)
+  reviewFormBtn.addEventListener("click", function(){
+    idReview = this.getAttribute("a")
+  })
 
 
 if(deleteBtn)
@@ -213,3 +270,11 @@ if (SignUpForm)
     update(form, id);
   });
 
+
+if(reviewForm)
+  reviewForm.addEventListener('submit', e=>{
+    e.preventDefault();
+    const review = document.getElementById('review').value
+    const rating = document.getElementById('rating').value
+    createReview(review,rating,idReview)
+  })

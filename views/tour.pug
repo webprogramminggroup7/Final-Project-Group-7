@@ -72,6 +72,21 @@ block content
     .reviews
       each review in tour.reviews
         +reviewCard(review)
+    a.btn.btn---green.nav__el--addReview Add a review
+
+  section.bg_modal
+    .modal-contents
+      .close +
+      form.form.form--review
+        .form__group
+          label.form__label(for='review') review 
+          input#review.form__input(type='text', placeholder='Enter the review', required)
+        .form__group
+          label.form__label(for='rating') rating
+          input#rating.form__input(type='number', placeholder='Enter the rating', required)
+        .form__group
+          button.btn.btn--green.abc(a=`${tour.id}`) Add review
+  
 
   section.section-cta
       img.cta__img.cta__img--1(src=`/img/tours/${tour.images[1]}`, alt='Tour picture')
