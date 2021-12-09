@@ -1,6 +1,8 @@
 const Tour = require("../models/tourSchemaModel");
 const Booking = require("../models/bookingSchemaModel");
 const errorChecking = require("../errorHandling/globalErrorChecking");
+let { ObjectId } = require('mongodb');
+
 
 const landingPage = async (req,res)=>{
     const allTours = await Tour.find()
@@ -8,36 +10,22 @@ const landingPage = async (req,res)=>{
 }
 
 const tourViewPage = async (req,res)=>{
-try{
-const singleTour = await Tour.findOne({slug:req.params.slug}).populate({path:"reviews",fields:"review rating user"})
-if(!singleTour){
-    res.status(404).json({message:"'There is no tour with that name."}) 
-}
-res.status(200).render("tour",{
-    title:`${singleTour.name}`,
-    tour:singleTour
-})
-}catch(e){
-    res.status(404).json({message:"Page NOT FOUND"})
-
-}
-}
-
-const updateTour = async (req,res)=>{
-    try{
+    errorChecking.NotStringOrEmptyString(req.params.slug);
     const singleTour = await Tour.findOne({slug:req.params.slug}).populate({path:"reviews",fields:"review rating user"})
     if(!singleTour){
         res.status(404).json({message:"'There is no tour with that name."}) 
     }
-    res.status(200).render("updateTour",{
-        title:`${singleTour.name}`,
-        tour:singleTour
-    })
-    }catch(e){
-        res.status(404).json({message:"Page NOT FOUND"})
-    
+    return singleTour;
+}
+
+const updateTour = async (req,res)=>{
+    errorChecking.NotStringOrEmptyString(req.params.slug);    
+    const singleTour = await Tour.findOne({slug:req.params.slug}).populate({path:"reviews",fields:"review rating user"})
+    if(!singleTour){
+        res.status(404).json({message:"'There is no tour with that name."}) 
     }
-    }
+    return singleTour;
+}
 
 const LoginForm = async (req,res)=>{
     res.status(200).render('login', {
@@ -64,25 +52,26 @@ const getAccountDetails=async(req,res)=>{
 }
 const getMyTours=async (req,res)=>{
     try{
+        ObjectId(req.user.id);
         const bookings = await Booking.find({ user: req.user.id });
 
         // 2) Find tours with the returned IDs
         const tourIDs = bookings.map(el => el.tour);
         const tours = await Tour.find({ _id: { $in: tourIDs } });
-      
+        
         res.status(200).render('overview', {
-          title: 'My Tours',
-          tours
-        });
+            title: 'My Tours',
+            tours
+          });
     }catch(err){
         res.status(404).json({message:"Page NOT FOUND",error:err})
-    errorChecking.NotStringOrEmptyString(req.params.slug);
-    const singleTour = await Tour.findOne({slug:req.params.slug}).populate({path:"reviews",fields:"review rating user"})
-    if(!singleTour){
-        throw "There is no tour with that name." 
+        errorChecking.NotStringOrEmptyString(req.params.slug);
+        const singleTour = await Tour.findOne({slug:req.params.slug}).populate({path:"reviews",fields:"review rating user"})
+        if(!singleTour){
+            throw "There is no tour with that name." 
+        }
+        return singleTour;
     }
-    return singleTour;
-}
 }
 
 module.exports = {

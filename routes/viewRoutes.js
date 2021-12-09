@@ -23,31 +23,46 @@ router.get("/all-tours",authenticationUser.isLoggedIn, async(req, res)=>{
 }
 })
 
-router.get("/tour/:slug",authenticationUser.isLoggedIn,viewRoutes.tourViewPage)
-
-router.get(
-  '/my-tours', bookingData.createBookingCheckout, authenticationUser.protectedRoute, async(req, res)=>{
-    try{
-      const userId = req.user.id;
-      errorChecking.NotStringOrEmptyString(userId, "User Id");
-      const tours = await viewRoutes.getMyTours(req, res);
-      res.status(200).render('overview', {
-        title: 'My Tours',
-        tours
-      });
-    }catch(ex){
-      if(ex.code){
-        res.status(ex.code).json({error: ex.message});
-        return;
-      }
-      res.status(500).json({
-        message: ex
-    });
+router.get("/tour/:slug",authenticationUser.isLoggedIn, async(req, res)=>{
+  try{
+    errorChecking.NotStringOrEmptyString(req.params.slug);
+    const singleTour = await viewRoutes.tourViewPage(req, res);
+    res.status(200).render("tour",{
+      title:`${singleTour.title}`,
+      tour:singleTour
+    })
+  }catch(ex){
+    if(ex.code){
+      res.status(ex.code).json({error: ex.message});
+      return;
     }
-    
+    res.status(500).json({
+      message: ex
+    });
   }
-);
-router.get("/updateTour/:slug", authenticationUser.isLoggedIn, viewRoutes.updateTour)
+  
+})
+
+router.get('/my-tours', bookingData.createBookingCheckout, authenticationUser.protectedRoute, viewRoutes.getMyTours);
+
+router.get("/updateTour/:slug", authenticationUser.isLoggedIn, async(req, res)=>{
+  try{
+    errorChecking.NotStringOrEmptyString(req.params.slug); 
+    const singleTour = await viewRoutes.updateTour(req, res);
+    res.status(200).render("updateTour",{
+      title:`${singleTour.name}`,
+      tour:singleTour
+  })
+  }catch(ex){
+    if(ex.code){
+      res.status(ex.code).json({error: ex.message});
+      return;
+    }
+    res.status(500).json({
+      message: ex
+    });
+  }
+})
 
 router.get('/signup', async (req,res)=>{
   res.status(200).render('signup', {
