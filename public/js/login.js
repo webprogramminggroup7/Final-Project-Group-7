@@ -85,8 +85,6 @@ const deleteTour = async (id)=> {
       method: 'DELETE',
       url: `/travel-bliss/tours/${id}`,
     });
-    
-    //alert(res.data.status)
     if(res.data.status === 'successfully deleted Tour with id'){
       alert('Tour has successfully been deleted')
     }
