@@ -12,12 +12,12 @@ each tour in tours
               p.card__text= tour.summary
               .card__data
                 svg.card__icon
-                  use(xlink:href='/img/icons.svg#icon-map-pin')
+                  use(xlink:href='/img/icons.svg#icon-map-pin')  
                 span=`${tour.locationInfo}` 
               .card__data
                 svg.card__icon
                   use(xlink:href='/img/icons.svg#icon-calendar')
-                span=`${tour.startDates}`
+                //- span=`${tour.startDates.getMonth()}/${tour.startDates.getDate()}/${tour.startDates.getFullYear()}`
               .card__data
                 svg.card__icon
                   use(xlink:href='/img/icons.svg#icon-user')

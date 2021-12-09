@@ -305,7 +305,7 @@ const logout = (req, res) => {
       expires: new Date(Date.now() + 15 * 1000),
       httpOnly: true
     });
-    res.status(200).json({ status: 'successfully logged out ' });
+    res.status(200).json({ status: 'successfully logged out' });
   };
 
 

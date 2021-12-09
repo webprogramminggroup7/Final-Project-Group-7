@@ -11,6 +11,7 @@ const router = express.Router()
 router.get("/all-tours",authenticationUser.isLoggedIn, async(req, res)=>{
   try{
     const allTours = await viewRoutes.landingPage(req, res);
+    console.log(allTours);
     res.status(200).render('overview',{
       title:"All Tours",
       tours:allTours

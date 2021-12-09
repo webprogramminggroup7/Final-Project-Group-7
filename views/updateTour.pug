@@ -9,7 +9,7 @@ block content
           input#tourId.form__input(type='hidden', value= `${tour.id}`)
         .form__group
           label.form__label(for='startDates') Start Date 
-          input#startDates.form__input(type='date', value=`${tour.startDates}`, placeholder='Enter 1st start date of tour', required)
+          input#startDates.form__input(type='date', value=`${tour.startDates.getFullYear()}-${tour.startDates.getMonth() + 1}-${tour.startDates.getDate()}`, placeholder='Enter 1st start date of tour', min= `${new Date()}` required)
         .form__group
           label.form__label(for='name') Name
           input#name.form__input(type='text', value=`${tour.name}` ,placeholder='Enter tour name', required)

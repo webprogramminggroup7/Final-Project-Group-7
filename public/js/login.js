@@ -48,14 +48,16 @@ const logout = async () => {
   try{
     const res = await axios({
       method: 'GET',
-      url: 'travel-bliss/users/logout'
+      url: 'http://localhost:3000/travel-bliss/users/logout'
     });
-    if ((res.data.status = 'success')){
+    console.log(res.data);
+    if ((res.data.status = 'successfully logged out')){
       alert('Logged out successfully!')
       location.assign('/all-tours');
     } //location.reload(true);
   } catch(err){
-    alert('error', 'Error logging out! Try again.');
+    console.log(err.response.data);
+    alert(`${err.response.data}`, 'Error logging out! Try again.');
   }
 }
 
