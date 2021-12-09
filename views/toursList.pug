@@ -13,19 +13,15 @@ each tour in tours
               .card__data
                 svg.card__icon
                   use(xlink:href='/img/icons.svg#icon-map-pin')
-                span Location 
+                span=`${tour.locationInfo}` 
               .card__data
                 svg.card__icon
                   use(xlink:href='/img/icons.svg#icon-calendar')
-                //- span= tour.startDates.toLocaleString('en-us', {month: 'long', year: 'numeric'})
-              .card__data
-                svg.card__icon
-                  use(xlink:href='/img/icons.svg#icon-flag')
-                span `Location stops`
+                span=`${tour.startDates}`
               .card__data
                 svg.card__icon
                   use(xlink:href='/img/icons.svg#icon-user')
-                span= `${tour.maxGroupSize} people`
+                span=`${tour.maxGroupSize} people`
 
             .card__footer
               p

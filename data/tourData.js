@@ -37,6 +37,7 @@ const resizeTourImages = async(req, res, next) => {
 
   req.body.locationImage = `tour-${req.params.id}-${Date.now()}-cover.jpeg`;
   await sharp(req.files.locationImage[0].buffer)
+  .resize(500, 300)
   .toFormat('jpeg')
   .jpeg({quality: 90})
   .toFile(`public/img/location/${req.body.locationImage}`);
@@ -146,7 +147,7 @@ const deleteSingleTour = async (req,res)=>{
         const deletedTour = await Tour.findByIdAndDelete(ID);
         console.log(deletedTour)
         res.status(204).json({
-          status: 'successfully deleted Tour with id'+ID
+          status: 'successfully deleted Tour with id'
         });
       } catch (error) {
         res.status(500).json({
