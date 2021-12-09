@@ -1,36 +1,26 @@
 const Testimonial = require("../models/testimonialSchemaModel")
-
+const User =  require("./../models/userSchemaModel")
+const errorChecking = require("../errorHandling/globalErrorChecking");
+let { ObjectId } = require('mongodb');
 
 const fetchAllTestimonials =async (req,res)=> {
-    try{
-       const Alltestimonials  = await Testimonial.find() 
-        
-        res.status(200).json({
-            status:"successful",
-            totalNumberofTestimonials:Alltestimonials.length,
-            data:Alltestimonials
-        })
-           }catch(error){
-            res.status(500).json({
-            status:"Failed",
-            message:error
-            })
-           }
+    const allTestimonials  = await Testimonial.find()
+    return allTestimonials;
 }
 
 
 const createSingleTestimonial = async (req,res)=>{
-    try{
-        // console.log(req.user)
-        testimonial = req.body.testimonial
-        user = req.user._id
-        const newTestimonial = await Testimonial.create({testimonial,user})
-        res.status(201).json({status:"success",message:"New Testimonial Added Successfully",testimonial:newTestimonial})
-    }catch(e){
-        res.status(401).json({status:"fail",message:"cannot add testimonial",error:e})
-     }
+    const testimonial = req.body.testimonial
+    const user = req.user._id
+    errorChecking.NotStringOrEmptyString(testimonial);
+    ObjectId(user);
 
+    const currentUser = await User.findById(req.user._id);
+    const name = currentUser.name;
+    const photo = currentUser.photo;
 
+    const newTestimonial = await Testimonial.create({testimonial,user,name,photo});
+    return newTestimonial;
 }
 
 

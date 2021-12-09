@@ -6,8 +6,16 @@ const testimoialSchemaModel = new mongoose.Schema({
     user:{
         type:mongoose.Schema.ObjectId,
         ref:"User",
+    },
+    name:{
+        type:String,
+        trim:true,
+        required:[true,"The user must have a name"],
+    },
+    photo: {
+        type: String,
+        default : 'default.jpg'
     }
-
 })
 
 const populatingFeilds = function(next){

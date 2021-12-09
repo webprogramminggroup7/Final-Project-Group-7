@@ -72,7 +72,7 @@ router.get('/signup', async (req,res)=>{
     });
 })
 
-router.get("/", (req, res) => {
+router.get("/", authenticationUser.isLoggedIn, (req, res) => {
   res.status(200).render('welcome');
 })
 
@@ -94,5 +94,6 @@ router.get("/createTour", authenticationUser.protectedRoute,async(req,res)=>{
       title: 'Create a New Tour'
     });
 })
+
 
 module.exports = router
