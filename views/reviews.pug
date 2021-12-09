@@ -2,17 +2,21 @@
         .user-view__form-container
           h2.heading-secondary.ma-bt-md Your Reviews
           #reviews-container-parent
+            if(reviews.length > 1)
                 each review in reviews
-                            .review-container
-                                .review-data
-                                  p.class= `Rating - ${review.rating}`
-                                  p.class= `Review - ${review.review}` 
-                                .review-edit 
-                                    p
-                                        a.delete-review(href=`/delete/?id=${review._id}`) Delete
-                                    p
-                                        a.edit-review(href=`/edit/?id=${review._id}`) Edit
-                                br
+                    .review-container
+                        .review-data
+                          p.class= `Rating - ${review.rating}`
+                          p.class= `Review - ${review.review}` 
+                        .review-edit 
+                            p
+                                a.delete-review(href=`/delete/?id=${review._id}`) Delete
+                            p
+                                a.edit-review(href=`/edit/?id=${review._id}`) Edit
+                        br
+            else  
+                        h3.no-data No reviews to Display
+
 #editReviewModal.modal.fade(tabindex='-1' role='dialog' aria-labelledby='exampleModalLabel' aria-hidden='true')
       .modal-dialog(role='document')
         .modal-content

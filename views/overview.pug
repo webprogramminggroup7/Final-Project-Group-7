@@ -57,15 +57,11 @@ block content
               .card__data
                 svg.card__icon
                   use(xlink:href='/img/icons.svg#icon-map-pin')
-                span Location 
+                span=`${tour.locationInfo}` 
               .card__data
                 svg.card__icon
                   use(xlink:href='/img/icons.svg#icon-calendar')
-                //span= tour.startDates[0].toLocaleString('en-us', {month: 'long', year: 'numeric'})
-              .card__data
-                svg.card__icon
-                  use(xlink:href='/img/icons.svg#icon-flag')
-                span `Location stops`
+                //- span=`${tour.startDates.getMonth()}/${tour.startDates.getDate()}/${tour.startDates.getFullYear()}`
               .card__data
                 svg.card__icon
                   use(xlink:href='/img/icons.svg#icon-user')
