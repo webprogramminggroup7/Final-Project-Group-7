@@ -71,7 +71,7 @@ res.status(200).json({
     data:allTours
 })
    }catch(error){
-    res.status(404).json({
+    res.status(500).json({
     status:"Failed",
     message:error
     })
@@ -90,7 +90,7 @@ res.status(201).json({
     } 
 })
 }catch(error){
-    res.status(404).json({
+    res.status(500).json({
         status:"Failed to create review",
         message:error
         })
@@ -108,7 +108,7 @@ const getSingleTour = async (req,res) =>{
           }
         });
       } catch (error) {
-        res.status(404).json({
+        res.status(500).json({
           status: 'fail to get single tour',
           message: error
         });
@@ -132,7 +132,7 @@ const updateExistingTour = async (req,res)=>{
           }
         });
       } catch (error) {
-        res.status(404).json({
+        res.status(500).json({
           status: 'failed to update tour with '+ ID,
           message: error
         });
@@ -150,7 +150,7 @@ const deleteSingleTour = async (req,res)=>{
           status: 'successfully deleted Tour with id'+ID
         });
       } catch (error) {
-        res.status(404).json({
+        res.status(500).json({
           status: 'failed to delete tour with id'+ID,
           message: error
         });
@@ -196,7 +196,7 @@ const getTourStatsLikeAverageRatingsAvgPriceminPriceMaxPrice = async(req,res)=>{
           }
         });
       } catch (error) {
-        res.status(404).json({
+        res.status(500).json({
           status: 'failed to get tour numbers',
           message: error
         });

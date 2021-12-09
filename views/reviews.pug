@@ -20,6 +20,8 @@
               span(aria-hidden='true') &times;
           .modal-body
             textarea#review-input(name='review-input' rows='4' cols='50')
+            .error-class
+              p#review-error(hidden)
           .modal-footer
             button.btn.btn-secondary(type='button' data-dismiss='modal') Close
             button#save-review-changes.btn.btn-primary(type='button') Save changes

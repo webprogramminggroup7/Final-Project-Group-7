@@ -1,17 +1,11 @@
-const Tour = require("../models/tourSchemaModel")
-const Booking = require("../models/bookingSchemaModel")
-const landingPage = async (req,res)=>{
-    try{
-        const allTours = await Tour.find()
+const Tour = require("../models/tourSchemaModel");
+const Booking = require("../models/bookingSchemaModel");
+const errorChecking = require("../errorHandling/globalErrorChecking");
 
-        res.status(200).render('overview',{
-            title:"All Tours",
-            tours:allTours
-        })
-        }
-    catch(e){
-      res.status(404).json({message:"Page NOT FOUND"})
-    }}
+const landingPage = async (req,res)=>{
+    const allTours = await Tour.find()
+    return allTours;
+}
 
 const tourViewPage = async (req,res)=>{
 try{
@@ -82,8 +76,15 @@ const getMyTours=async (req,res)=>{
         });
     }catch(err){
         res.status(404).json({message:"Page NOT FOUND",error:err})
+    errorChecking.NotStringOrEmptyString(req.params.slug);
+    const singleTour = await Tour.findOne({slug:req.params.slug}).populate({path:"reviews",fields:"review rating user"})
+    if(!singleTour){
+        throw "There is no tour with that name." 
     }
+    return singleTour;
 }
+}
+
 module.exports = {
     landingPage,
     tourViewPage,

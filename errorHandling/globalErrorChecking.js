@@ -16,14 +16,7 @@ const NotStringOrEmptyString = (str, strName) =>{
     }
 }
 
-const checkRating = (rating) =>{
-    if(rating < 0 || rating > 5){
-        throw {code:400, message: `Rating should be in between 1-5`};
-    }
-}
-
 module.exports = {
     checkInt,
-    NotStringOrEmptyString,
-    checkRating
+    NotStringOrEmptyString
 }
