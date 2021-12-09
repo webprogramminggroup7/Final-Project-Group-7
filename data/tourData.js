@@ -146,7 +146,7 @@ const deleteSingleTour = async (req,res)=>{
         const deletedTour = await Tour.findByIdAndDelete(ID);
         console.log(deletedTour)
         res.status(204).json({
-          status: 'successfully deleted Tour with id'+ID
+          status: 'successfully deleted Tour with id'
         });
       } catch (error) {
         res.status(500).json({

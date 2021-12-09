@@ -79,6 +79,27 @@ const create = async (data) => {
   }
 };
 
+const deleteTour = async (id)=> {
+  try{
+    const res = await axios({
+      method: 'DELETE',
+      url: `/travel-bliss/tours/${id}`,
+    });
+    
+    //alert(res.data.staus)
+    if(res.data.staus === 'successfully deleted Tour with id'){
+      alert('Tour has successfully been deleted')
+    }
+    alert('Tour has successfully been deleted')
+    window.location.assign('/all-tours')
+  }
+  catch (err){
+    console.log(err.response.data.message)
+    alert(err.response.data.message)
+    
+  }
+};
+
 
 const loginForm = document.querySelector('.form--login');
 
@@ -86,9 +107,19 @@ const logOutBtn = document.querySelector('.nav__el--logout');
 
 const SignUpForm = document.querySelector('.form--signup');
 
+const deleteBtn = document.querySelector('.nav__el--delete')
+
 if (logOutBtn) logOutBtn.addEventListener('click', logout);
 
 const createForm = document.querySelector('.form--create');
+
+
+if(deleteBtn)
+  deleteBtn.addEventListener("click", function(){
+    const id = this.getAttribute("idForTour");
+    deleteTour(id)
+  })
+
 
 if (loginForm)
   loginForm.addEventListener('submit', e => {
