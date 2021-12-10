@@ -73,8 +73,8 @@ block content
     .reviews
       each review in tour.reviews
         +reviewCard(review)
-    - if(user)
-      - if(user.role === 'user')
+    -if(user && user.role === 'user')
+      .add-review-div
         a.btn.btn---green.nav__el--addReview Add a review
 
   section.bg_modal
@@ -95,12 +95,12 @@ block content
       .cta__content
         h2.heading-secondary What are you waiting for?
         p.cta__text= `${tour.duration} days. 1 adventure. Infinite memories. Make it yours today!`
-        - if(user)
-          - if(user.role === 'user')
-            button.btn.btn--green.span-all-rows#book-tour(data-tour-id=`${tour.id}`) Book tour now!
-        - else
-          a.btn.btn--green.span-all-rows(href='/login') Log in to book tour
+      - if(user)
+        - if(user.role === 'user')
+          button.btn.btn--green.span-all-rows#book-tour(data-tour-id=`${tour.id}`) Book tour now
+      - else
+        a.btn.btn--green.span-all-rows(href='/login') Log in to book tour
       -  if(user)
           - if(user.role === 'admin')
-            a.btn.btn--green.span-all-rows(href=`/updateTour/${tour.slug}`) Edit Tour
-            a.btn.btn--green.nav__el--delete(idForTour = `${tour.id}`) Delete tour
+            a#edit-tour-btn.btn.btn--green.span-all-rows(href=`/updateTour/${tour.slug}`) Edit Tour
+            a#delete-tour-btn.btn.btn--green.nav__el--delete(idForTour = `${tour.id}`) Delete tour

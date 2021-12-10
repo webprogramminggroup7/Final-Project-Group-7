@@ -169,7 +169,7 @@ body {
 .heading-primary {
   font-size: 5rem;
   text-align: center;
-  width: 70%;
+  width: 100%;
   margin: 0 auto;
 }
 
@@ -179,7 +179,7 @@ body {
   position: absolute;
   bottom: 1rem;
   right: 2rem;
-  width: 70%;
+  width: 100%;
   z-index: 10;
 }
 
@@ -749,6 +749,7 @@ body {
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
+  margin-bottom: 20px
 }
 .cta__text {
   font-size: 1.9rem;
@@ -1549,4 +1550,20 @@ body {
   position: absolute;
   color:#55c57a;
   font-weight: bold;
+}
+
+#edit-tour-btn, #delete-tour-btn{
+  padding-top: 12px !important;
+  padding-bottom: 12px !important;
+  font-size: 1.5rem;
+  border-radius: 0px !important;
+  margin-right: 10px;
+  border: 0px;
+  width: 130px;
+}
+.add-review-div{
+  margin-top: 15px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
 }
