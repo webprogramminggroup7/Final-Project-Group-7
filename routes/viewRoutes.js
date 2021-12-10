@@ -32,7 +32,7 @@ router.get("/tour/:slug",authenticationUser.isLoggedIn, async(req, res)=>{
       tour:singleTour
     })
   }catch(ex){
-    if(ex.code){
+    if(ex.code === 400){
       res.status(ex.code).json({error: ex.message});
       return;
     }
@@ -54,7 +54,7 @@ router.get("/updateTour/:slug", authenticationUser.isLoggedIn, async(req, res)=>
       tour:singleTour
   })
   }catch(ex){
-    if(ex.code){
+    if(ex.code === 400){
       res.status(ex.code).json({error: ex.message});
       return;
     }

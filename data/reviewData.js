@@ -14,29 +14,30 @@ const fetchAllReviews = async (req,res) =>{
      return allReviews;
  }
 
- const createSingleReview = async (req,res) => {
-    const user = req.user.id;
-    const tour = req.params.tourId
-    const { review, rating, createdAt} = req.body;
-
-    reviewChecking.NotStringOrEmptyString(review, "Review");
-    reviewChecking.NotStringOrEmptyString(user, "User Id");
-    reviewChecking.NotStringOrEmptyString(tour, "Tour Id");
-    reviewChecking.checkInt(rating, "Rating");
-    reviewChecking.checkRating(rating);
-
-    ObjectId(user);
-    ObjectId(tour);
-
+ const createSingleReview = async (req,res) => {  
+   try{
     if(!req.body.tour){
-        req.body.tour = req.params.tourId
+      req.body.tour = req.params.tourId
     }
     if(!req.body.user){
         req.body.user = req.user.id
     }
     reviewBody = req.body
-    const createdNewReview = await Review.create(reviewBody)
-    return createdNewReview;
+    const createdNewReview = await Review.create(reviewBody);
+    res.status(201).json({
+      status:"successful created new Review",
+      data:{
+          review:createdNewReview
+      } 
+  })
+}catch(error){
+  res.status(404).json({
+    status: "Failed to create review",
+    message:error
+  })
+}
+    
+    
 }
 
  const getSingleReview = async (req,res) =>{

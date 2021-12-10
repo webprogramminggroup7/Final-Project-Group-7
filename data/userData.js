@@ -73,7 +73,7 @@ const getSingleUser = async(req,res)=>{
           }
         });
       } catch (ex) {
-        if(ex.code){
+        if(ex.code === 400){
           res.status(ex.code).json({error: ex.message});
           return;
           }
@@ -106,7 +106,7 @@ const deleteUser = async(req,res)=>{
          data: null
         })
      }catch(ex){
-      if(ex.code){
+      if(ex.code === 400){
         res.status(ex.code).json({error: ex.message});
         return;
         }
@@ -160,7 +160,7 @@ const deleteMyData = async (req,res) =>{
         data: null
       })
     }catch (ex) {
-      if(ex.code){
+      if(ex.code === 400){
         res.status(ex.code).json({error: ex.message});
         return;
         }
