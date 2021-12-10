@@ -20,7 +20,7 @@ router.get("/",authenticationUser.protectedRoute, async(req, res)=>{
             data:allReviews
         })
     }catch(ex){
-        if(ex.code){
+        if(ex.code === 400){
             res.status(ex.code).json({error: ex.message});
             return;
         }
@@ -33,45 +33,7 @@ router.get("/",authenticationUser.protectedRoute, async(req, res)=>{
 })
 
 //create single review
-router.post("/reviews/:tourId",authenticationUser.protectedRoute,authenticationUser.OnlyGiveAccessTo("user"), async(req, res)=>{
-    try{
-        const user = req.user.id;
-        const tour = req.params.tourId
-        const { review, rating, createdAt} = req.body;
-
-        reviewChecking.NotStringOrEmptyString(review, "Review");
-        reviewChecking.NotStringOrEmptyString(user, "User Id");
-        reviewChecking.NotStringOrEmptyString(tour, "Tour Id");
-        reviewChecking.checkInt(rating, "Rating");
-        try{
-            ObjectId(user);
-            ObjectId(tour);
-        }catch(ex){
-            res.status(400).json({
-                message: 'Invalid ObjectId'
-            })
-            return;
-        }
-
-        const createdNewReview = await reviewData.createSingleReview(req, res);
-        res.status(201).json({
-            status:"successful created new Review",
-            data:{
-                review:createdNewReview
-            } 
-        })
-    }
-    catch(ex){
-        if(ex.code){
-            res.status(ex.code).json({error: ex.message});
-            return;
-        }
-        res.status(500).json({
-            message: ex
-        });
-    }
-    
-})
+router.post("/reviews/:tourId",authenticationUser.protectedRoute,authenticationUser.OnlyGiveAccessTo("user"),reviewData.createSingleReview)
 
 // commented because causing problems for next routes
 // router.get("/:id",authenticationUser.protectedRoute,reviewData.getSingleReview)
@@ -105,7 +67,7 @@ router.patch("/:id",authenticationUser.protectedRoute,authenticationUser.OnlyGiv
         });
 
     }catch(ex){
-        if(ex.code){
+        if(ex.code === 400){
             res.status(ex.code).json({error: ex.message});
             return;
         }
@@ -126,7 +88,7 @@ router.delete("/:id",authenticationUser.protectedRoute,authenticationUser.OnlyGi
         });
 
     }catch(ex){
-        if(ex.code){
+        if(ex.code === 400){
             res.status(ex.code).json({error: ex.message});
             return;
         }
@@ -153,7 +115,7 @@ router.get("/reviewsId",authenticationUser.protectedRoute, async(req, res)=>{
         const data = await reviewData.getReviewsForUserID(req, res);
         res.status(200).render('reviews', {reviews: data});
     }catch(ex){
-        if(ex.code){
+        if(ex.code === 400){
             res.status(ex.code).json({error: ex.message});
             return;
         }
