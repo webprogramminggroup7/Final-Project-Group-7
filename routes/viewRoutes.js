@@ -65,20 +65,37 @@ router.get("/updateTour/:slug", authenticationUser.isLoggedIn, async(req, res)=>
 })
 
 router.get('/signup', async (req,res)=>{
+  if(!req.cookies.jwt)
+  {
   res.status(200).render('signup', {
       title: 'Create a new account'
     });
+  }
+  else
+  {
+    res.status(200).redirect('/all-tours')
+  }
 })
 
 router.get("/", authenticationUser.isLoggedIn, (req, res) => {
-  res.status(200).render('welcome');
+  if(!req.cookies.jwt) {
+    res.status(200).render('welcome');
+  }
+  else {
+    res.status(200).redirect('/all-tours');
+  }
 })
 
 
 router.get('/login',authenticationUser.isLoggedIn,async (req,res)=>{
+  if(!req.cookies.jwt) {
   res.status(200).render('login', {
       title: 'Log into your account'
     });
+  }
+  else {
+    res.status(200).redirect('/all-tours')
+  }
 })
 
 router.get("/me",authenticationUser.protectedRoute,async(req,res)=>{

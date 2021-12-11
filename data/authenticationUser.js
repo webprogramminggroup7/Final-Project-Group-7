@@ -43,12 +43,12 @@ try{
 RequestBodyObject = {
     email : req.body.email,
     name  : req.body.name,
-    photo : req.file.filename,
     password : req.body.password,
     passwordConfirm : req.body.passwordConfirm,
     // passwordChangedAt:req.body.passwordChangedAt
     role:req.body.role
 }
+if(req.file) RequestBodyObject.photo = req.file.filename;
 
 const newUserSignUp = await User.create(RequestBodyObject)
 const JWT_TOKEN = jwt.sign({id:newUserSignUp._id,name:newUserSignUp.name},process.env.SECRET_JSON_WEB_TOKEN,{
