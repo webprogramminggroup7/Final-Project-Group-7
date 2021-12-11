@@ -8,7 +8,7 @@ const updateSettings = async (data) => {
       });
       // console.log(res)
       if (res.data.status === 'successful in updating the name or email') {
-        alert(`successfully updated updated successfully!`);
+        alert(`successfully updated name or/and email`);
       }
     } catch (err) {
       console.log(err.response.data.message.message)
@@ -44,6 +44,7 @@ const updatePassword = async (passwordCurrent, passwordConfirm,password) => {
     // console.log(res)
     if (res.data.status === 'Succesfully Logged In') {
       alert(`successfully updated the Password!`);
+      location.reload()
     }else{
       alert(`${res.data.message}!`);
 
@@ -52,8 +53,8 @@ const updatePassword = async (passwordCurrent, passwordConfirm,password) => {
   } catch (err) {
     if(err.response.data.message==="Your current password is wrong"){
       alert(err.response.data.message);
-
     }else{
+      console.log(err.response.data.message)
       alert(err.response.data.message.message);
     }
     console.log(err.response.data.message)

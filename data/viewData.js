@@ -14,21 +14,21 @@ const landingPage = async (req,res)=>{
         })
         }
     catch(e){
-      res.status(404).json({message:"Page NOT FOUND"})
+      res.status(404).render('error',{error:"Page NOT FOUND"})
 }}
 
 const tourViewPage = async (req,res)=>{
     try{
     const singleTour = await Tour.findOne({slug:req.params.slug}).populate({path:"reviews",fields:"review rating user"})
     if(!singleTour){
-        res.status(404).json({message:"'There is no tour with that name."}) 
+        res.status(404).render('error',{error:"'There is no tour with that name."}) 
     }
     res.status(200).render("tour",{
         title:`${singleTour.name}`,
         tour:singleTour
     })
     }catch(e){
-        res.status(404).json({message:"Page NOT FOUND"})
+        res.status(404).render('error',{error:e})
     
     }
 }
@@ -38,14 +38,14 @@ const updateTour = async (req,res)=>{
         errorChecking.NotStringOrEmptyString(req.params.slug);    
         const singleTour = await Tour.findOne({slug:req.params.slug}).populate({path:"reviews",fields:"review rating user"})
         if(!singleTour){
-            res.status(404).json({message:"'There is no tour with that name."}) 
+            res.status(404).render('error',{error:"'There is no tour with that name."}) 
         }
         res.status(200).render("updateTour",{
             title:`${singleTour.name}`,
             tour:singleTour
         })
     }catch(e){
-        res.status(404).json({message:"Page NOT FOUND"})
+        res.status(404).render('error',{error:"Page NOT FOUND"})
     }
     
 }
@@ -86,7 +86,7 @@ const getMyTours=async (req,res)=>{
           tours
         });
     }catch(err){
-        res.status(404).json({message:"Page NOT FOUND",error:err})
+        res.status(404).render('error',{error:"Page NOT FOUND"})
     }
 }
 
