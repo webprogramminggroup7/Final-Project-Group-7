@@ -38,7 +38,7 @@ block content
           h2.heading-secondary.ma-bt-lg Quick facts
 
           //- const date = tour.startDates.toLocaleString('en-us', {month: 'long', year: 'numeric'})
-          //- +overviewBox('Start date', `${tour.startDates.getMonth()} / ${tour.startDates.getDate()} / ${tour.startDates.getFullYear()} `, 'calendar')
+          +overviewBox('Start date', `${tour.startDates.getMonth() + 1} / ${tour.startDates.getDate()} / ${tour.startDates.getFullYear()} `, 'calendar')
           +overviewBox('Difficulty', tour.difficulty, 'trending-up')
           +overviewBox('Participants', `${tour.maxGroupSize} people`, 'user')
           +overviewBox('Rating', `${tour.ratingsAverage} / 5`, 'star')

@@ -18,7 +18,7 @@ if tours && tours.length > 0
               .card__data
                 svg.card__icon
                   use(xlink:href='/img/icons.svg#icon-calendar')
-                //- span=`${tour.startDates.getMonth()}/${tour.startDates.getDate()}/${tour.startDates.getFullYear()}`
+                span=`${tour.startDates.substring(5,7)}-${tour.startDates.substring(8,10)}-${tour.startDates.substring(0,4)}`
               .card__data
                 svg.card__icon
                   use(xlink:href='/img/icons.svg#icon-user')
