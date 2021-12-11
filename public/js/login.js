@@ -17,7 +17,8 @@ const loginFunction = async (email, password) => {
       }, 1500);
     }
   } catch (err) {
-      alert(err)
+      // console.log(err.response)
+      alert(err.response.data.message)
     // showAlert('error', err.response.data.message);
   }
 };
@@ -38,8 +39,14 @@ const signup = async (data) => {
     }, 1500);
   }
 } catch (err) {
-  console.log(err.response.data.message.name)
+  if(err.response.data.message.name==="ValidationError"){
+    alert(err.response.data.message.message)
+
+  }else{
     alert(err.response.data.message)
+
+  }
+  console.log(err.response)
   // showAlert('error', err.response.data.message);
 }
 };
@@ -203,8 +210,8 @@ if (loginForm)
     e.preventDefault();
     const email = document.getElementById('email').value;
     const password = document.getElementById('password').value;
-    console.log(email)
-    console.log(password)
+    // console.log(email)
+    // console.log(password)
 
     loginFunction(email, password);
   });

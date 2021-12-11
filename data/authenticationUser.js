@@ -48,8 +48,11 @@ RequestBodyObject = {
     // passwordChangedAt:req.body.passwordChangedAt
     role:req.body.role
 }
-if(req.file) RequestBodyObject.photo = req.file.filename;
-
+if(req.file) RequestBodyObject.photo = req.file.filename
+const UserFromDatabase = await User.findOne({email:req.body.email})
+        if(UserFromDatabase){
+          return res.status(401).json({message:"User With this Email Already Exist"}) 
+        }
 const newUserSignUp = await User.create(RequestBodyObject)
 const JWT_TOKEN = jwt.sign({id:newUserSignUp._id,name:newUserSignUp.name},process.env.SECRET_JSON_WEB_TOKEN,{
     expiresIn:process.env.EXPIRES_IN_JWT
@@ -89,6 +92,9 @@ const login = async (req,res) =>{
             return res.status(400).json({message:"Please Provide Password or Email"})
         }
         const UserFromDatabase = await User.findOne({email:email}).select("+password")
+        if(!UserFromDatabase){
+          return res.status(401).json({message:"Invalid Email Or Password. Please Enter the Correct Credentials !"}) 
+        }
         // console.log(UserFromDatabase)
         match = await UserFromDatabase.comparePassword(password,UserFromDatabase.password)
         if(!UserFromDatabase || !match){
