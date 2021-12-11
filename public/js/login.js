@@ -232,48 +232,131 @@ if (SignUpForm)
   if(createForm)
   createForm.addEventListener('submit', e => {
     e.preventDefault();
-    const form = new FormData();
-    form.append('startDates', document.getElementById('startDates').value)
-    form.append('name', document.getElementById('name').value)
-    form.append('duration', document.getElementById('duration').value)
-    form.append('maxGroupSize', document.getElementById('maxGroupSize').value)
-    form.append('difficulty', document.getElementById('difficulty').value)
-    form.append('price', document.getElementById('price').value)
-    form.append('summary', document.getElementById('summary').value)
-    form.append('description', document.getElementById('description').value)
-    form.append('locationInfo', document.getElementById('locationInfo').value)
-    form.append('imageCover', document.getElementById('imageCover').files[0])
-    let files = document.getElementById('images').files;
+    const startDates = document.getElementById('startDates').value
+    const name = document.getElementById('name').value
+    const duration = document.getElementById('duration').value
+    const maxGroupSize = document.getElementById('maxGroupSize').value
+    const difficulty = document.getElementById('difficulty').value
+    const price = document.getElementById('price').value
+    const summary = document.getElementById('summary').value
+    const description = document.getElementById('description').value
+    const locationInfo = document.getElementById('locationInfo').value
+    const imageCover = document.getElementById('imageCover').files[0]
+    const files = document.getElementById('images').files;
+    const locationImage = document.getElementById('locationImage').files[0];
+    
+    try {
+      if(!startDates || !name || !duration || !maxGroupSize || !difficulty || !price || !summary || !description || !locationImage || !locationInfo ||!files || !imageCover) throw "One of the form field is not provided";
+      //if((startDates - current) < 0) throw "Provide a proper date";
+      console.log(startDates)
+      if(typeof name !== "string") throw "Provide a proper name";
+      if(typeof duration !== "string") throw "Provide a proper duration";
+      if(typeof maxGroupSize !== "string") throw "Provide a proper max group size";
+      if(typeof difficulty !== "string") throw "Provide a proper difficulty";
+      if(typeof price !== "string") throw "Provide a proper price";
+      if(typeof summary !== "string") throw "Provide a proper summary";
+      if(typeof description !== "string") throw "Provide a proper description";
+      if(typeof locationInfo !== "string") throw "Provide a proper location";
+
+      // if(startDates < current) throw "Date should be after the current date";
+      if(name.trim().length === 0) throw "Name should not be empty";
+      if(summary.trim().length === 0) throw "Summary should not be empty";
+      if(description.trim().length === 0) throw "Description should not be empty";
+      if(locationInfo.trim().length === 0) throw "Location should not be empty";
+
+      if(!(name.length >= 10 && name.length <= 45)) throw "Name must be between length 10 and 45";
+      if(duration <= 0) throw "Duration should be greater than 0";
+      if(maxGroupSize <= 0) throw "Max Group Size should be greater than 0";
+      if(!(difficulty === "easy" || difficulty === "medium" || difficulty === "difficult")) throw "Difficulty should be either difficult,easy or medium";
+      if(price <= 0) throw "Price should be greater than 0";
+      if(!(files.length >= 1 && files.length <= 3)) throw "Your can provide minimum 1 and maximum 3 images";
+
+      const form = new FormData();
+      form.append('startDates', document.getElementById('startDates').value)
+      form.append('name', document.getElementById('name').value)
+      form.append('duration', document.getElementById('duration').value)
+      form.append('maxGroupSize', document.getElementById('maxGroupSize').value)
+      form.append('difficulty', document.getElementById('difficulty').value)
+      form.append('price', document.getElementById('price').value)
+      form.append('summary', document.getElementById('summary').value)
+      form.append('description', document.getElementById('description').value)
+      form.append('locationInfo', document.getElementById('locationInfo').value)
+      form.append('imageCover', document.getElementById('imageCover').files[0])
     for (var i=0; i < files.length; i++) {
       form.append('images', files[i]);
     }
     form.append('locationImage', document.getElementById('locationImage').files[0])
     console.log(form);
     create(form);
+    }
+    catch(e) {
+      alert(e)
+    }
   });
 
   if(updateForm)
   updateForm.addEventListener('submit', e => {
     e.preventDefault();
     const id = document.getElementById('tourId').value
+    const startDates = document.getElementById('startDates').value
+    const name = document.getElementById('name').value
+    const duration = document.getElementById('duration').value
+    const maxGroupSize = document.getElementById('maxGroupSize').value
+    const difficulty = document.getElementById('difficulty').value
+    const price = document.getElementById('price').value
+    const summary = document.getElementById('summary').value
+    const description = document.getElementById('description').value
+    const locationInfo = document.getElementById('locationInfo').value
+    const imageCover = document.getElementById('imageCover').files[0]
+    const files = document.getElementById('images').files;
+    const locationImage = document.getElementById('locationImage').files[0];
     const form = new FormData();
-    form.append('startDates', document.getElementById('startDates').value)
-    form.append('name', document.getElementById('name').value)
-    form.append('duration', document.getElementById('duration').value)
-    form.append('maxGroupSize', document.getElementById('maxGroupSize').value)
-    form.append('difficulty', document.getElementById('difficulty').value)
-    form.append('price', document.getElementById('price').value)
-    form.append('summary', document.getElementById('summary').value)
-    form.append('description', document.getElementById('description').value)
-    form.append('locationInfo', document.getElementById('locationInfo').value)
-    form.append('imageCover', document.getElementById('imageCover').files[0])
-    let files = document.getElementById('images').files;
-    for (var i=0; i < files.length; i++) {
-      form.append('images', files[i]);
+    try {
+      if(!startDates || !name || !duration || !maxGroupSize || !difficulty || !price || !summary || !description || !locationImage || !locationInfo ||!files || !imageCover) throw "One of the form field is not provided";
+      const current = new Date();
+      // if(!(startDates instanceof Date)) throw "Provide a proper date";
+      if(typeof name !== "string") throw "Provide a proper name";
+      if(typeof duration !== "string") throw "Provide a proper duration";
+      if(typeof maxGroupSize !== "string") throw "Provide a proper max group size";
+      if(typeof difficulty !== "string") throw "Provide a proper difficulty";
+      if(typeof price !== "string") throw "Provide a proper price";
+      if(typeof summary !== "string") throw "Provide a proper summary";
+      if(typeof description !== "string") throw "Provide a proper description";
+      if(typeof locationInfo !== "string") throw "Provide a proper location";
+
+      // if(startDates < current) throw "Date should be after the current date";
+      if(name.trim().length === 0) throw "Name should not be empty";
+      if(summary.trim().length === 0) throw "Summary should not be empty";
+      if(description.trim().length === 0) throw "Description should not be empty";
+      if(locationInfo.trim().length === 0) throw "Location should not be empty";
+
+      if(!(name.length >= 10 && name.length <= 45)) throw "Name must be between length 10 and 45";
+      if(duration <= 0) throw "Duration should be greater than 0";
+      if(maxGroupSize <= 0) throw "Max Group Size should be greater than 0";
+      if(!(difficulty === "easy" || difficulty === "medium" || difficulty === "difficult")) throw "Difficulty should be either difficult,easy or medium";
+      if(price <= 0) throw "Price should be greater than 0";
+      if(!(files.length >= 1 && files.length <= 3)) throw "Your can provide minimum 1 and maximum 3 images";
+
+      form.append('startDates', document.getElementById('startDates').value)
+      form.append('name', document.getElementById('name').value)
+      form.append('duration', document.getElementById('duration').value)
+      form.append('maxGroupSize', document.getElementById('maxGroupSize').value)
+      form.append('difficulty', document.getElementById('difficulty').value)
+      form.append('price', document.getElementById('price').value)
+      form.append('summary', document.getElementById('summary').value)
+      form.append('description', document.getElementById('description').value)
+      form.append('locationInfo', document.getElementById('locationInfo').value)
+      form.append('imageCover', document.getElementById('imageCover').files[0])
+      for (var i=0; i < files.length; i++) {
+        form.append('images', files[i]);
+      }
+      form.append('locationImage', document.getElementById('locationImage').files[0])
+      console.log(form);
+      update(form, id);
     }
-    form.append('locationImage', document.getElementById('locationImage').files[0])
-    console.log(form);
-    update(form, id);
+    catch(e) {
+      alert(e);
+    }
   });
 
 

@@ -9,7 +9,12 @@ const router = express.Router()
 router.get('/signup',viewRoutes.SignUpForm)
 router.get("/all-tours",authenticationUser.isLoggedIn,viewRoutes.landingPage)
 router.get("/", (req, res) => {
-  res.render('welcome');
+  if(!req.cookies.jwt) {
+    res.status(200).render('welcome');
+  }
+  else {
+    res.status(200).redirect('/all-tours');
+  }
 })
 router.get("/tour/:slug",authenticationUser.isLoggedIn,viewRoutes.tourViewPage)
 router.get('/login',authenticationUser.isLoggedIn,viewRoutes.LoginForm)

@@ -51,15 +51,25 @@ const updateTour = async (req,res)=>{
 }
 
 const LoginForm = async (req,res)=>{
+    if(!req.cookies.jwt) {
     res.status(200).render('login', {
         title: 'Log into your account'
       });
+    }
+    else {
+        res.status(200).redirect('/all-tours');
+    }
 }
 
 const SignUpForm = async (req,res)=>{
+    if(!req.cookies.jwt) {
     res.status(200).render('signup', {
         title: 'Create a new account'
       });
+    }
+    else {
+        res.status(200).redirect('/all-tours');
+    }
 }
 
 const createNewTour = async(req,res)=>{
