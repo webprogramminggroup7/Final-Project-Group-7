@@ -21,7 +21,10 @@ block content
           input#maxGroupSize.form__input(type='number', value=`${tour.maxGroupSize}` , placeholder='Enter Max Group Size', required)
         .form__group
           label.form__label(for='difficulty') Difficulty
-          input#difficulty.form__input(type='text', value=`${tour.difficulty}` , placeholder='Enter tour difficulty', required)
+          select(name='difficulty' placeholder="Difficulty" id="difficulty" value =`${tour.difficulty}` required)
+            option(value='easy') Easy
+            option(value='medium') Medium
+            option(value='difficult') Difficult
         .form__group
           label.form__label(for='price') Price
           input#price.form__input(type='number', value=`${tour.price}` , placeholder='Enter Price for the tour', required)

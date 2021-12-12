@@ -1,6 +1,51 @@
 const Review = require(".././models/reviewSchemaModel");
 let { ObjectId } = require('mongodb');
 const reviewChecking = require('../errorHandling/review');
+const sharp = require('sharp');
+const multer = require("multer");
+
+const multerStorage = multer.memoryStorage();
+
+const multerFilter = (req, file, cb) => {
+  if(file.mimetype.startsWith('image')) {
+    cb(null, true);
+  } else {
+    cb('Not an image', false);
+  }
+}
+
+const upload = multer({
+    storage: multerStorage,
+    fileFilter: multerFilter
+})
+
+const uploadTourImages = upload.fields([
+  {name : 'reviewImage', maxCount : 2}
+]);
+// const apiFilterSortLimitPaginate = require("./apiFilterSortLimitPaginate");
+
+const resizeTourImages = async(req, res, next) => {
+  console.log(req.files);
+  if(!req.files.reviewImage) return next();
+
+  req.body.reviewImage = [];
+
+  await Promise.all(
+    req.files.reviewImage.map(async(file, i) => {
+      const filename = `tour-${req.params.id}-${Date.now()}-${i + 1}.jpeg`;
+
+      await sharp(file.buffer)
+      .resize(200,133)
+      .toFormat('jpeg')
+      .jpeg({quality: 90})
+      .toFile(`public/img/reviews/${filename}`);
+
+      req.body.reviewImage.push(filename);
+    })
+  );
+  next();
+};
+
 
 const fetchAllReviews = async (req,res) =>{
     const tourId = req.params.tourId;
@@ -104,5 +149,7 @@ const getReviewsForUserID = async(req,res)=> {
      deleteSingleReview,
      updateExistingReview,
      getSingleReview,
-     getReviewsForUserID
+     getReviewsForUserID,
+     uploadTourImages,
+     resizeTourImages
  }

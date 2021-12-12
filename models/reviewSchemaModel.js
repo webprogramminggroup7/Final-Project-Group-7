@@ -25,7 +25,8 @@ const reviewSchemaModel = new mongoose.Schema({
         type:mongoose.Schema.ObjectId,
         ref:"Tour",
         required:[true,"A review must belong to the tour"]
-    }
+    },
+    reviewImage: [String]
 
 },{
     toJSON: { virtuals: true },

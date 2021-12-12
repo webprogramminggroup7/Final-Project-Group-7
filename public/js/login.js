@@ -129,19 +129,12 @@ const update = async (data,id) => {
 };
 
 
-const createReview = async(review,rating,idReview) => {
+const createReview = async(data) => {
   try{
-    let reviewCheck = review.match(/^[0-9]+$/) != null
-    if(reviewCheck == true){
-      return alert('Review cannot contain only numbers')
-    }
-    if(rating<=0 || rating>5){
-      return alert('Rating must be between 1 to 5 inclusive')
-    }
     const res = await axios({
       method: 'POST',
       url: `/travel-bliss/reviews/reviews/${idReview}`,
-      data: {review,rating}
+      data
     });
   if (res.data.status === 'successful created new Review') {
         alert('New review has been created!')
@@ -364,7 +357,26 @@ if (SignUpForm)
 if(reviewForm)
   reviewForm.addEventListener('submit', e=>{
     e.preventDefault();
-    const review = document.getElementById('review').value
-    const rating = document.getElementById('rating').value
-    createReview(review,rating,idReview)
+    try {
+      const review = document.getElementById('review').value
+      const rating = document.getElementById('rating').value
+    let reviewCheck = review.match(/^[0-9]+$/) != null
+    if(reviewCheck == true){
+      throw 'Review cannot contain only numbers'
+    }
+    if(rating<=0 || rating>5){
+      throw 'Rating must be between 1 to 5 inclusive'
+    }
+    const form = new FormData();
+    form.append('review', document.getElementById('review').value)
+    form.append('rating', document.getElementById('rating').value)
+    const files = document.getElementById('reviewImage').files
+    for (var i=0; i < files.length; i++) {
+      form.append('reviewImage', files[i]);
+    }
+    createReview(form)
+    }
+    catch(e) {
+      alert(e)
+    }
   })
