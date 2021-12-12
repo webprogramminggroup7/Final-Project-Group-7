@@ -398,8 +398,6 @@ if(reviewForm){
     try {
       const review = document.getElementById('review').value
       const rating = document.getElementById('rating').value
-      const files = document.getElementById('reviewImage').files
-
       let reviewCheck = review.match(/^[0-9]+$/) != null
       if(reviewCheck == true){
         throw 'Review cannot contain only numbers'
@@ -407,16 +405,14 @@ if(reviewForm){
       if(rating<=0 || rating>5){
         throw 'Rating must be between 1 to 5 inclusive'
       }
-      if(files.length > 2) throw "Your can provide upto 2 images";
       const form = new FormData();
       form.append('review', document.getElementById('review').value)
       form.append('rating', document.getElementById('rating').value)
-      if(files && files.length > 0){
-        for (var i=0; i < files.length; i++) {
-          form.append('reviewImage', files[i]);
-        }
+      const files = document.getElementById('reviewImage').files
+      for (var i=0; i < files.length; i++) {
+        form.append('reviewImage', files[i]);
       }
-      
+      console.log(form)
       createReview(form)
     }
     catch(e) {

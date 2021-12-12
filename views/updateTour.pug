@@ -10,13 +10,13 @@ block content
         .form__group
           label.form__label(for='startDates') Start Date 
           -if((tour.startDates.getMonth() + 1) >= 10 && tour.startDates.getDate() >= 10)
-            input#startDates.form__input(type='date', value=`${tour.startDates.getFullYear()}-${tour.startDates.getMonth() + 1}-${tour.startDates.getDate()}`, placeholder='Enter 1st start date of tour', required)
+            input#startDates.form__input(type='date', value=`${tour.startDates.getFullYear()}-${tour.startDates.getMonth() + 1}-${tour.startDates.getDate()}`, min = `${tour.startDates.getFullYear()}-${tour.startDates.getMonth() + 1}-${tour.startDates.getDate()}`, placeholder='Enter 1st start date of tour', required)
           -else if((tour.startDates.getMonth() + 1) < 10 && tour.startDates.getDate() >= 10)
-            input#startDates.form__input(type='date', value=`${tour.startDates.getFullYear()}-${'0'+ (tour.startDates.getMonth() + 1)}-${tour.startDates.getDate()}`, placeholder='Enter 1st start date of tour', required)
+            input#startDates.form__input(type='date', value=`${tour.startDates.getFullYear()}-${'0'+ (tour.startDates.getMonth() + 1)}-${tour.startDates.getDate()}`, min = `${tour.startDates.getFullYear()}-${'0'+ (tour.startDates.getMonth() + 1)}-${tour.startDates.getDate()}`, placeholder='Enter 1st start date of tour', required)
           -else if((tour.startDates.getMonth() + 1) >= 10 && tour.startDates.getDate() < 10)
-            input#startDates.form__input(type='date', value=`${tour.startDates.getFullYear()}-${(tour.startDates.getMonth() + 1)}-${'0' + tour.startDates.getDate()}`, placeholder='Enter 1st start date of tour', required)
+            input#startDates.form__input(type='date', value=`${tour.startDates.getFullYear()}-${(tour.startDates.getMonth() + 1)}-${'0' + tour.startDates.getDate()}`, min = `${tour.startDates.getFullYear()}-${(tour.startDates.getMonth() + 1)}-${'0' + tour.startDates.getDate()}`, placeholder='Enter 1st start date of tour', required)
           -else
-            input#startDates.form__input(type='date', value=`${tour.startDates.getFullYear()}-${'0'+ (tour.startDates.getMonth() + 1)}-${'0' + tour.startDates.getDate()}`, placeholder='Enter 1st start date of tour', required)
+            input#startDates.form__input(type='date', value=`${tour.startDates.getFullYear()}-${'0'+ (tour.startDates.getMonth() + 1)}-${'0' + tour.startDates.getDate()}`, min = `${tour.startDates.getFullYear()}-${'0'+ (tour.startDates.getMonth() + 1)}-${'0' + tour.startDates.getDate()}`, placeholder='Enter 1st start date of tour', required)
         .form__group
           label.form__label(for='name') Name
           input#name.form__input(type='text', value=`${tour.name}` ,placeholder='Enter tour name', required)
