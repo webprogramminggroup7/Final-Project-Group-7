@@ -146,9 +146,10 @@ const createReview = async(review,rating,idReview) => {
   if (res.data.status === 'successful created new Review') {
         alert('New review has been created!')
     //   showAlert('success', 'Logged in successfully!');
-      window.setTimeout(() => {
-        location.assign('/all-tours');
-      }, 1500);
+      // window.setTimeout(() => {
+      //   location.assign('/all-tours');
+      // }, 1500);
+      location.reload('/')
     }
   }
   catch(err){

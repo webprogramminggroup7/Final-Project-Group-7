@@ -8,7 +8,9 @@ const updateSettings = async (data) => {
       });
       // console.log(res)
       if (res.data.status === 'successful in updating the name or email') {
+        
         alert(`successfully updated user data`);
+        location.reload('/')
       }
     } catch (err) {
       console.log(err.response.data.message.message)
