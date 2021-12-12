@@ -19,7 +19,7 @@
         element.find('#add-testimonial-form').submit(function(event){
             event.preventDefault();
 
-            let testimonial = $('#add-testimonial').val();
+            let testimonial = $('#add-testimonial').val().trim();
             let error = $('#testimonial-error');
             error.hide();
             

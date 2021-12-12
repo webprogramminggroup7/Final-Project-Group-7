@@ -116,12 +116,12 @@ const checkInt=(num) => {
     filterForm.submit(function(event){
         event.preventDefault();
 
-        var minPrice = minPriceInput.val();
-        var maxPrice = maxPriceInput.val();
-        var minRating = minRatingsInput.val();
-        var maxRating = maxRatingsInput.val();
-        var minDuration = minDurationInput.val();
-        var maxDuration = maxDurationInput.val();
+        var minPrice = minPriceInput.val().trim();
+        var maxPrice = maxPriceInput.val().trim();
+        var minRating = minRatingsInput.val().trim();
+        var maxRating = maxRatingsInput.val().trim();
+        var minDuration = minDurationInput.val().trim();
+        var maxDuration = maxDurationInput.val().trim();
 
         var obj = {}
         errorP.hide();
