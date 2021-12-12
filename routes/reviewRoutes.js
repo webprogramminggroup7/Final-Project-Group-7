@@ -113,6 +113,16 @@ router.get("/user",authenticationUser.protectedRoute, async(req, res)=>{
 router.get("/reviewsId",authenticationUser.protectedRoute, async(req, res)=>{
     try{
         const data = await reviewData.getReviewsForUserID(req, res);
+        if(data.length > 0){
+            for (const review of data){
+                let tourId = review.tour;
+                let singleTour = await reviewData.getSingleReviewForTourId(tourId);
+                if(singleTour){
+                    review.tourSlug = singleTour.slug;
+                    review.tourName = singleTour.name;
+                }
+            }
+        }
         res.status(200).render('reviews', {reviews: data});
     }catch(ex){
         if(ex.statusCode === 400){
