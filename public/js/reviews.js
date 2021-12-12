@@ -57,8 +57,8 @@
             })
 
             $('#save-review-changes').on('click', function(event){
-                let newReview = $('#review-input').val();
-                    newRating = $('#rating-input').val();
+                let newReview = $('#review-input').val().trim();
+                    newRating = $('#rating-input').val().trim();
                     reviewError = $('#review-error');
                 
                 
