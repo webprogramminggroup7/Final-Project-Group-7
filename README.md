@@ -18,3 +18,14 @@ Application Overview -
 4) Users can also add testimonials, testifying their experience about the website.
 5) To take a look at all the testimonials, click on "Testimonials" in the navigation bar
 6) Admin is responsible to manage the tours - he can add a new tour, edit and delete the existing tour.
+
+Admin Credentials-
+email - admin@example.com
+password - test1234
+
+User Credentials-
+email - sraykar@steven.edu
+password - test1234
+
+github repo link
+https://github.com/webprogramminggroup7/Final-Project-Group-7/tree/development
