@@ -3,16 +3,16 @@ const checkInt = (num, numName) => {
         num = parseFloat(num);
 
     if(typeof num !== "number" || !num ){
-        throw {code:400, message: `Invalid input for ${numName}`};
+        throw {statusCode:400, message: `Invalid input for ${numName}`};
     }
     if(isNaN(num)){
-        throw {code:400, message: `Invalid input for ${numName}`};
+        throw {statusCode:400, message: `Invalid input for ${numName}`};
     }
 }
 
 const NotStringOrEmptyString = (str, strName) =>{
     if(typeof str !== "string" || !str ||  str.trim().length < 1){
-        throw {code:400, message: `Invalid input for ${strName}`};
+        throw {statusCode:400, message: `Invalid input for ${strName}`};
     }
 }
 

@@ -14,28 +14,38 @@ const landingPage = async (req,res)=>{
         })
         }
     catch(e){
-      res.status(404).render('error',{error:"Page NOT FOUND"})
+      res.status(500).render('error',{error: e})
 }}
 
 const tourViewPage = async (req,res)=>{
     try{
-    const singleTour = await Tour.findOne({slug:req.params.slug}).populate({path:"reviews",fields:"review rating user"})
-    if(!singleTour){
-        res.status(404).render('error',{error:"'There is no tour with that name."}) 
-    }
-    res.status(200).render("tour",{
-        title:`${singleTour.name}`,
-        tour:singleTour
-    })
-    }catch(e){
-        res.status(404).render('error',{error:e})
+        const slug = req.params.slug;
+        if(typeof slug !== "string" || !slug ||  slug.trim().length < 1){
+            res.status(400).json({error:"Invalid Slug"}) 
+        }
     
+        const singleTour = await Tour.findOne({slug:req.params.slug}).populate({path:"reviews",fields:"review rating user"})
+        if(!singleTour){
+            res.status(404).json('error',{error:"'There is no tour with that name."}) 
+        }
+        res.status(200).render("tour",{
+            title:`${singleTour.name}`,
+            tour:singleTour
+        })
+    }catch(ex){
+        res.status(500).json({
+        error: ex
+        });
     }
+    
 }
 
 const updateTour = async (req,res)=>{
     try{
-        errorChecking.NotStringOrEmptyString(req.params.slug);    
+        const slug = req.params.slug;
+        if(typeof slug !== "string" || !slug ||  slug.trim().length < 1){
+            res.status(400).json({error:"Invalid Slug"}) 
+        }   
         const singleTour = await Tour.findOne({slug:req.params.slug}).populate({path:"reviews",fields:"review rating user"})
         if(!singleTour){
             res.status(404).render('error',{error:"'There is no tour with that name."}) 
@@ -44,8 +54,10 @@ const updateTour = async (req,res)=>{
             title:`${singleTour.name}`,
             tour:singleTour
         })
-    }catch(e){
-        res.status(404).render('error',{error:"Page NOT FOUND"})
+    }catch(ex){
+        res.status(500).json({
+        error: ex
+        });
     }
     
 }
@@ -83,10 +95,20 @@ const getAccountDetails=async(req,res)=>{
         title: 'Your Personal Account'
       });
 }
+
 const getMyTours=async (req,res)=>{
     try{
+        try{
+            errorChecking.NotStringOrEmptyString(req.user.id);
+            ObjectId(req.user.id);
+        }
+        catch(ex){
+            res.status(400).json({
+                message: 'Invalid ObjectId'
+            })
+            return;
+        }
         const bookings = await Booking.find({ user: req.user.id });
-
         // 2) Find tours with the returned IDs
         const tourIDs = bookings.map(el => el.tour);
         const tours = await Tour.find({ _id: { $in: tourIDs } });
@@ -95,8 +117,14 @@ const getMyTours=async (req,res)=>{
           title: 'My Tours',
           tours
         });
-    }catch(err){
-        res.status(404).render('error',{error:"Page NOT FOUND"})
+    }catch(ex){
+        if(ex.statusCode === 400){
+            res.status(ex.statusCode).json({error: ex.message});
+            return;
+        }
+        res.status(500).json({
+        error: ex
+        });
     }
 }
 

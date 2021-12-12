@@ -40,7 +40,7 @@ const fetchAllUsers = async(req,res)=>{
             data:allUsers
         })
       }catch(error){
-            res.status(404).json({
+            res.status(500).json({
             status:"Failed to get all users",
             message:error
             })
@@ -57,13 +57,24 @@ const createSingleUser = async(req,res)=>{
 const getSingleUser = async(req,res)=>{
     try {
         ID = req.params.id
-        errorChecking.NotStringOrEmptyString(req.params.id, "User Id");
-        ObjectId(ID);
+        try{
+          errorChecking.NotStringOrEmptyString(req.params.id, "User Id");
+          ObjectId(req.params.id);
+        }
+        catch(ex){
+            res.status(400).json({
+                message: 'Invalid User Id'
+            })
+            return;
+        }
 
         const SingleUser = await User.findById(ID)
         console.log(SingleUser)
         if(!SingleUser){
-            throw {code:400, message: 'fail to get single user'};
+            res.status(404).json({
+              message: 'No user found for the Id'
+            })
+            return;
         }
 
         res.status(200).json({
@@ -73,10 +84,6 @@ const getSingleUser = async(req,res)=>{
           }
         });
       } catch (ex) {
-        if(ex.code === 400){
-          res.status(ex.code).json({error: ex.message});
-          return;
-          }
         res.status(500).json({
           message: ex
         });
@@ -94,8 +101,16 @@ const getMe = (req,res,next)=>{
 
 const deleteUser = async(req,res)=>{
     try{
-        errorChecking.NotStringOrEmptyString(req.params.id, "User Id");
-        ObjectId(req.params.id);
+        try{
+          errorChecking.NotStringOrEmptyString(req.params.id, "User Id");
+          ObjectId(req.params.id);
+        }
+        catch(ex){
+            res.status(400).json({
+                message: 'Invalid User Id'
+            })
+            return;
+        }
         const UserFromDatabase =  await User.findByIdAndUpdate(req.params.id, { active: false });
         if(!UserFromDatabase){
         return res.status(404).json({message:"No document found with that id"})
@@ -106,10 +121,6 @@ const deleteUser = async(req,res)=>{
          data: null
         })
      }catch(ex){
-      if(ex.code === 400){
-        res.status(ex.code).json({error: ex.message});
-        return;
-        }
       res.status(500).json({
         message: ex
       });
@@ -129,8 +140,11 @@ const updateMyData = async(req,res)=>{
   console.log(req.file);
   console.log(req.body);
     try{
-        if (req.body.password || req.body.passwordConfirm) {
+          if (req.body.password || req.body.passwordConfirm) {
             return res.status(400).json({message:"This Route is Not for Updating Password.Use /updatePassword for doing so"})
+          }
+          if(!req.body.name || !req.body.email ){
+            return res.status(400).json({message:"Please provide a valid name and email"})
           }
           const filteredBody = filterBodyObject(req.body, 'name', 'email');
           if(req.file) filteredBody.photo = req.file.filename;
@@ -147,23 +161,27 @@ const updateMyData = async(req,res)=>{
             }
           });
     }catch(err){
-         return res.status(400).json({message:err})
+         return res.status(500).json({message:err})
     }
 }
 const deleteMyData = async (req,res) =>{
     try{
-        errorChecking.NotStringOrEmptyString(req.user.id, "User Id");
-        ObjectId(req.user.id);
-      const UserFromDatabase =  await User.findByIdAndUpdate(req.user.id, { active: false });
-      res.status(204).json({
-        status: 'successful in Making user inactive data',
-        data: null
-      })
-    }catch (ex) {
-      if(ex.code === 400){
-        res.status(ex.code).json({error: ex.message});
-        return;
+        try{
+          errorChecking.NotStringOrEmptyString(req.user.id, "User Id");
+          ObjectId(req.user.id);
         }
+        catch(ex){
+            res.status(400).json({
+                message: 'Invalid User Id'
+            })
+            return;
+        }
+        const UserFromDatabase =  await User.findByIdAndUpdate(req.user.id, { active: false });
+        res.status(204).json({
+          status: 'successful in Making user inactive data',
+          data: null
+        })
+    }catch (ex) {
       res.status(500).json({
         message: ex
       });
