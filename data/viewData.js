@@ -26,7 +26,7 @@ const tourViewPage = async (req,res)=>{
     
         const singleTour = await Tour.findOne({slug:req.params.slug}).populate({path:"reviews",fields:"review rating user"})
         if(!singleTour){
-            res.status(404).json('error',{error:"'There is no tour with that name."}) 
+            res.status(404).render('error',{error:"'There is no tour with that name."}) 
         }
         res.status(200).render("tour",{
             title:`${singleTour.name}`,
@@ -36,6 +36,7 @@ const tourViewPage = async (req,res)=>{
         res.status(500).json({
         error: ex
         });
+        
     }
     
 }
