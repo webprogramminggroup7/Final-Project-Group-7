@@ -93,7 +93,7 @@
                     $('#editReviewModal').modal('toggle');
                     setTimeout(() => {
                         getReviews();
-                    }, 500);
+                    }, 600);
                 })
             })
         })

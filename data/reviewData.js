@@ -1,4 +1,6 @@
 const Review = require(".././models/reviewSchemaModel");
+const Tour = require(".././models/tourSchemaModel")
+
 let { ObjectId } = require('mongodb');
 const reviewChecking = require('../errorHandling/review');
 const sharp = require('sharp');
@@ -143,6 +145,12 @@ const getReviewsForUserID = async(req,res)=> {
     return allReviews;
 }
 
+const getSingleReviewForTourId = async (tourId) =>{
+      ID = tourId
+      const tour = await Tour.findById(ObjectId(tourId)).populate("reviews")
+      return tour;
+}
+
  module.exports = {
      fetchAllReviews,
      createSingleReview,
@@ -151,5 +159,6 @@ const getReviewsForUserID = async(req,res)=> {
      getSingleReview,
      getReviewsForUserID,
      uploadTourImages,
-     resizeTourImages
+     resizeTourImages,
+     getSingleReviewForTourId
  }

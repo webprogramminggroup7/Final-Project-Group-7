@@ -6,6 +6,8 @@
                 each review in reviews
                     .review-container
                         .review-data
+                          p.class
+                            a(href=`/tour/${review.tourSlug}`)= `On tour - ${review.tourName}` 
                           p.class= `Rating - ${review.rating}`
                           p.class= `Review - ${review.review}` 
                         .review-edit 
