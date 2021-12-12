@@ -1,3 +1,7 @@
+var today = new Date();
+var dd = today.getDate();
+var mm = today.getMonth()+1; //January is 0 so need to add 1 to make it 1!
+var yyyy = today.getFullYear();
 const loginFunction = async (email, password) => {
   try {
     const res = await axios({
@@ -169,9 +173,9 @@ const reviewFormBtn = document.querySelector('.abc')
 
 if (logOutBtn) logOutBtn.addEventListener('click', logout);
 
-const createForm = document.querySelector('.form--create');
+const createForm = document.querySelector('#form--create');
 
-const reviewForm = document.querySelector('.form--review');
+const reviewForm = document.querySelector('#form--review');
 
 
 if(addReviewBtn)
@@ -224,10 +228,7 @@ if (SignUpForm)
   });
 
 if(createForm)
-  var today = new Date();
-  var dd = today.getDate();
-  var mm = today.getMonth()+1; //January is 0 so need to add 1 to make it 1!
-  var yyyy = today.getFullYear();
+{
   if(dd<10){
     dd='0'+dd
   } 
@@ -235,8 +236,9 @@ if(createForm)
     mm='0'+mm
   } 
 
-  today = yyyy+'-'+mm+'-'+dd;
-  document.getElementById("startDates").setAttribute("min", today);
+  var today1 = yyyy+'-'+mm+'-'+dd;
+  var dd = document.getElementById("startDates");
+  document.getElementById("startDates").setAttribute("min", today1);
 
   createForm.addEventListener('submit', e => {
     e.preventDefault();
@@ -302,13 +304,14 @@ if(createForm)
       alert(e)
     }
   });
-
-if(updateForm)
+}
   
-  var today = new Date();
-  var dd = today.getDate();
-  var mm = today.getMonth()+1; //January is 0 so need to add 1 to make it 1!
-  var yyyy = today.getFullYear();
+  
+
+if(updateForm){
+  dd = today.getDate();
+  mm = today.getMonth()+1; //January is 0 so need to add 1 to make it 1!
+  yyyy = today.getFullYear();
   if(dd<10){
     dd='0'+dd
   } 
@@ -316,9 +319,8 @@ if(updateForm)
     mm='0'+mm
   } 
 
-  today = yyyy+'-'+mm+'-'+dd;
-  document.getElementById("startDates").setAttribute("min", today);
-
+  today1 = yyyy+'-'+mm+'-'+dd;
+  document.getElementById("startDates").setAttribute("min", today1);
   updateForm.addEventListener('submit', e => {
     e.preventDefault();
     const id = document.getElementById('tourId').value
@@ -382,9 +384,15 @@ if(updateForm)
       alert(e);
     }
   });
+}
+  
+  //var today = new Date();
+  
+
+  
 
 
-if(reviewForm)
+if(reviewForm){
   reviewForm.addEventListener('submit', e=>{
     e.preventDefault();
     try {
@@ -415,3 +423,5 @@ if(reviewForm)
       alert(e)
     }
   })
+}
+  
