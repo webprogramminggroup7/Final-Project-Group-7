@@ -153,7 +153,7 @@ const createReview = async(review,rating,idReview) => {
   }
   catch(err){
     if(err.response.data.message.keyPattern={tour: 1, user: 1}){
-      alert("User Has Already Given A Review For This Tour.No duplicate Allowed")
+      alert("You have already given a review for this tour. No duplicates allowed!")
     }
   }
 }

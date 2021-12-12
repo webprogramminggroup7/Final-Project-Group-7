@@ -20,8 +20,8 @@ router.get("/",authenticationUser.protectedRoute, async(req, res)=>{
             data:allReviews
         })
     }catch(ex){
-        if(ex.code === 400){
-            res.status(ex.code).json({error: ex.message});
+        if(ex.statusCode === 400){
+            res.status(ex.statusCode).json({error: ex.message});
             return;
         }
         res.status(500).json({
@@ -67,8 +67,8 @@ router.patch("/:id",authenticationUser.protectedRoute,authenticationUser.OnlyGiv
         });
 
     }catch(ex){
-        if(ex.code === 400){
-            res.status(ex.code).json({error: ex.message});
+        if(ex.statusCode === 400){
+            res.status(ex.statusCode).json({error: ex.message});
             return;
         }
         res.status(500).json({
@@ -88,8 +88,8 @@ router.delete("/:id",authenticationUser.protectedRoute,authenticationUser.OnlyGi
         });
 
     }catch(ex){
-        if(ex.code === 400){
-            res.status(ex.code).json({error: ex.message});
+        if(ex.statusCode === 400){
+            res.status(ex.statusCode).json({error: ex.message});
             return;
         }
         res.status(500).json({
@@ -115,8 +115,8 @@ router.get("/reviewsId",authenticationUser.protectedRoute, async(req, res)=>{
         const data = await reviewData.getReviewsForUserID(req, res);
         res.status(200).render('reviews', {reviews: data});
     }catch(ex){
-        if(ex.code === 400){
-            res.status(ex.code).json({error: ex.message});
+        if(ex.statusCode === 400){
+            res.status(ex.statusCode).json({error: ex.message});
             return;
         }
         res.status(500).json({
