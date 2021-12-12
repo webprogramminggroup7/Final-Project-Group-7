@@ -225,17 +225,9 @@ if (SignUpForm)
 
 if(createForm)
   var today = new Date();
-  var dd = today.getDate();
-  var mm = today.getMonth()+1; //January is 0 so need to add 1 to make it 1!
-  var yyyy = today.getFullYear();
-  if(dd<10){
-    dd='0'+dd
-  } 
-  if(mm<10){
-    mm='0'+mm
-  } 
-
-  today = yyyy+'-'+mm+'-'+dd;
+  //var todayDate = `${today.substring(5,7)}-${today.substring(8,10)}-${today.substring(0,4)}`
+  console.log(today)
+  const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
   document.getElementById("startDates").setAttribute("min", today);
 
   createForm.addEventListener('submit', e => {
@@ -305,20 +297,6 @@ if(createForm)
 
 if(updateForm)
   
-  var today = new Date();
-  var dd = today.getDate();
-  var mm = today.getMonth()+1; //January is 0 so need to add 1 to make it 1!
-  var yyyy = today.getFullYear();
-  if(dd<10){
-    dd='0'+dd
-  } 
-  if(mm<10){
-    mm='0'+mm
-  } 
-
-  today = yyyy+'-'+mm+'-'+dd;
-  document.getElementById("startDates").setAttribute("min", today);
-
   updateForm.addEventListener('submit', e => {
     e.preventDefault();
     const id = document.getElementById('tourId').value
@@ -390,21 +368,22 @@ if(reviewForm)
     try {
       const review = document.getElementById('review').value
       const rating = document.getElementById('rating').value
-    let reviewCheck = review.match(/^[0-9]+$/) != null
-    if(reviewCheck == true){
-      throw 'Review cannot contain only numbers'
-    }
-    if(rating<=0 || rating>5){
-      throw 'Rating must be between 1 to 5 inclusive'
-    }
-    const form = new FormData();
-    form.append('review', document.getElementById('review').value)
-    form.append('rating', document.getElementById('rating').value)
-    const files = document.getElementById('reviewImage').files
-    for (var i=0; i < files.length; i++) {
-      form.append('reviewImage', files[i]);
-    }
-    createReview(form)
+      let reviewCheck = review.match(/^[0-9]+$/) != null
+      if(reviewCheck == true){
+        throw 'Review cannot contain only numbers'
+      }
+      if(rating<=0 || rating>5){
+        throw 'Rating must be between 1 to 5 inclusive'
+      }
+      const form = new FormData();
+      form.append('review', document.getElementById('review').value)
+      form.append('rating', document.getElementById('rating').value)
+      const files = document.getElementById('reviewImage').files
+      for (var i=0; i < files.length; i++) {
+        form.append('reviewImage', files[i]);
+      }
+      console.log(form)
+      createReview(form)
     }
     catch(e) {
       alert(e)
