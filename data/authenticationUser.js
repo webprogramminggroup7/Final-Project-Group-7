@@ -308,7 +308,7 @@ res.status(200).json({
 
 const logout = (req, res) => {
     res.cookie('jwt', 'LoggedOutSuccesfully', {
-      expires: new Date(Date.now() + 15 * 1000),
+      expires: new Date(Date.now() ),
       httpOnly: true
     });
     res.status(200).json({ status: 'successfully logged out' });

@@ -39,6 +39,9 @@
 
             $.ajax(requestConfig).then(function(responseMessage){
                 alert("You testimonial is uploaded successfully");
+                window.setTimeout(() => {
+        location.assign('/travel-bliss/testimonials');
+      }, 10);
             })
         })
     }

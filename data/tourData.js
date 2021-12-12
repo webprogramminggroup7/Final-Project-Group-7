@@ -2,6 +2,8 @@ const Tour = require("../models/tourSchemaModel")
 const apiFilterSortLimitPaginate = require("./apiFilterSortLimitPaginate");
 const sharp = require('sharp');
 const multer = require("multer");
+let { ObjectId } = require('mongodb');
+
 
 const multerStorage = multer.memoryStorage();
 
@@ -82,7 +84,33 @@ res.status(200).json({
 const createSingleTour = async (req,res) => {
 try{
 tourBody = req.body
-console.log(tourBody);
+const {startDates, name , duration , maxGroupSize ,difficulty,price ,summary ,description ,locationImage ,locationInfo ,files ,imageCover} = tourBody
+
+
+// console.log(tourBody);
+if(typeof name !== "string") return res.status(400).json({error: "Provide a proper name"});
+      if(typeof duration !== "string") return res.status(400).json({error:"Provide a proper duration"});
+      if(typeof maxGroupSize !== "string") return res.status(400).json({error: "Provide a proper max group size"});
+      if(typeof difficulty !== "string") return res.status(400).json({error: "Provide a proper difficulty"});
+      if(typeof price !== "string") return res.status(400).json({error:"Provide a proper price"});
+      if(typeof summary !== "string") return res.status(400).json({error: "Provide a proper summary"});
+      if(typeof description !== "string") return res.status(400).json({error: "Provide a proper description"});
+      if(typeof locationInfo !== "string") return res.status(400).json({error: "Provide a proper location"});
+
+
+      if(name.trim().length === 0) return res.status(400).json({error: "Name should not be empty"});
+      if(summary.trim().length === 0) return res.status(400).json({error: "Summary should not be empty"});
+      if(description.trim().length === 0) return res.status(400).json({error: "Description should not be empty"});
+      if(locationInfo.trim().length === 0) return res.status(400).json({error: "Location should not be empty"});
+
+      if(!(name.length >= 10 && name.length <= 45)) return res.status(400).json({error: "Name must be between length 10 and 45"});
+      if(duration <= 0) return res.status(400).json({error:  "Duration should be greater than 0"});
+      if(maxGroupSize <= 0) return res.status(400).json({error: "Max Group Size should be greater than 0"});
+      if(!(difficulty === "easy" || difficulty === "medium" || difficulty === "difficult")) return  res.status(400).json({error:  "Difficulty should be either difficult,easy or medium"});
+      if(price <= 0) return res.status(400).json({error:  "Price should be greater than 0"});
+      
+
+
 const createdNewTour = await Tour.create(tourBody)
 res.status(201).json({
     status:"successful created new tour",
@@ -92,7 +120,7 @@ res.status(201).json({
 })
 }catch(error){
     res.status(500).json({
-        status:"Failed to create review",
+        status:"Failed to create Tour",
         message:error
         })
 }
@@ -100,6 +128,8 @@ res.status(201).json({
 const getSingleTour = async (req,res) =>{
     try {
         ID = req.params.id
+        ObjectId(ID);
+
         const SingleTour = await Tour.findById(ID).populate("reviews")
     
         res.status(200).json({
@@ -119,7 +149,31 @@ const getSingleTour = async (req,res) =>{
 const updateExistingTour = async (req,res)=>{
     try {
         ID = req.params.id
+        ObjectId(ID);
+
         BODY = req.body
+const {startDates, name , duration , maxGroupSize ,difficulty,price ,summary ,description ,locationImage ,locationInfo ,files ,imageCover} = BODY
+
+        if(typeof name !== "string") return res.status(400).json({error: "Provide a proper name"});
+      if(typeof duration !== "string") return res.status(400).json({error:"Provide a proper duration"});
+      if(typeof maxGroupSize !== "string") return res.status(400).json({error: "Provide a proper max group size"});
+      if(typeof difficulty !== "string") return res.status(400).json({error: "Provide a proper difficulty"});
+      if(typeof price !== "string") return res.status(400).json({error:"Provide a proper price"});
+      if(typeof summary !== "string") return res.status(400).json({error: "Provide a proper summary"});
+      if(typeof description !== "string") return res.status(400).json({error: "Provide a proper description"});
+      if(typeof locationInfo !== "string") return res.status(400).json({error: "Provide a proper location"});
+
+
+      if(name.trim().length === 0) return res.status(400).json({error: "Name should not be empty"});
+      if(summary.trim().length === 0) return res.status(400).json({error: "Summary should not be empty"});
+      if(description.trim().length === 0) return res.status(400).json({error: "Description should not be empty"});
+      if(locationInfo.trim().length === 0) return res.status(400).json({error: "Location should not be empty"});
+
+      if(!(name.length >= 10 && name.length <= 45)) return res.status(400).json({error: "Name must be between length 10 and 45"});
+      if(duration <= 0) return res.status(400).json({error:  "Duration should be greater than 0"});
+      if(maxGroupSize <= 0) return res.status(400).json({error: "Max Group Size should be greater than 0"});
+      if(!(difficulty === "easy" || difficulty === "medium" || difficulty === "difficult")) return  res.status(400).json({error:  "Difficulty should be either difficult,easy or medium"});
+      if(price <= 0) return res.status(400).json({error:  "Price should be greater than 0"});
         AdditionalParamsForRunningValidators = {
             new: true,
             runValidators: true
@@ -145,6 +199,7 @@ const updateExistingTour = async (req,res)=>{
 const deleteSingleTour = async (req,res)=>{
     try {
         ID = req.params.id
+        ObjectId(ID)
         const deletedTour = await Tour.findByIdAndDelete(ID);
         console.log(deletedTour)
         res.status(204).json({

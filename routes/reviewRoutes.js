@@ -33,7 +33,7 @@ router.get("/",authenticationUser.protectedRoute, async(req, res)=>{
 })
 
 //create single review
-router.post("/reviews/:tourId",authenticationUser.protectedRoute,authenticationUser.OnlyGiveAccessTo("user"),reviewData.createSingleReview)
+router.post("/reviews/:tourId",authenticationUser.protectedRoute,authenticationUser.OnlyGiveAccessTo("user"),  reviewData.uploadTourImages, reviewData.resizeTourImages,reviewData.createSingleReview)
 
 // commented because causing problems for next routes
 // router.get("/:id",authenticationUser.protectedRoute,reviewData.getSingleReview)
