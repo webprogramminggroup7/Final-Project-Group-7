@@ -80,6 +80,7 @@ const create = async (data) => {
       data
     });
     console.log(res.data)
+
     if (res.data.status === 'successful created new tour') {
         alert('New tour has been created!')
     //   showAlert('success', 'Logged in successfully!');
@@ -140,12 +141,14 @@ const createReview = async(data) => {
       url: `/travel-bliss/reviews/reviews/${idReview}`,
       data
     });
+    console.log(res.data)
   if (res.data.status === 'successful created new Review') {
         alert('New review has been created!')
     //   showAlert('success', 'Logged in successfully!');
       // window.setTimeout(() => {
       //   location.assign('/all-tours');
       // }, 1500);
+
       location.reload('/')
     }
   }
@@ -244,6 +247,7 @@ if(createForm)
     e.preventDefault();
 
     const startDates = document.getElementById('startDates').value
+    console.log(startDates)
     const name = document.getElementById('name').value
     const duration = document.getElementById('duration').value
     const maxGroupSize = document.getElementById('maxGroupSize').value
