@@ -1,0 +1,57 @@
+extends base
+
+block content
+  main.main
+    .update-form
+      h2.heading-secondary.ma-bt-lg Edit Tour
+      form.form.form--update
+        .form__group
+          input#tourId.form__input(type='hidden', value= `${tour.id}`)
+        .form__group
+          label.form__label(for='startDates') Start Date 
+          -if((tour.startDates.getMonth() + 1) >= 10 && tour.startDates.getDate() >= 10)
+            input#startDates.form__input(type='date', value=`${tour.startDates.getFullYear()}-${tour.startDates.getMonth() + 1}-${tour.startDates.getDate()}`, min = `${tour.startDates.getFullYear()}-${tour.startDates.getMonth() + 1}-${tour.startDates.getDate()}`, placeholder='Enter 1st start date of tour', required)
+          -else if((tour.startDates.getMonth() + 1) < 10 && tour.startDates.getDate() >= 10)
+            input#startDates.form__input(type='date', value=`${tour.startDates.getFullYear()}-${'0'+ (tour.startDates.getMonth() + 1)}-${tour.startDates.getDate()}`, min = `${tour.startDates.getFullYear()}-${'0'+ (tour.startDates.getMonth() + 1)}-${tour.startDates.getDate()}`, placeholder='Enter 1st start date of tour', required)
+          -else if((tour.startDates.getMonth() + 1) >= 10 && tour.startDates.getDate() < 10)
+            input#startDates.form__input(type='date', value=`${tour.startDates.getFullYear()}-${(tour.startDates.getMonth() + 1)}-${'0' + tour.startDates.getDate()}`, min = `${tour.startDates.getFullYear()}-${(tour.startDates.getMonth() + 1)}-${'0' + tour.startDates.getDate()}`, placeholder='Enter 1st start date of tour', required)
+          -else
+            input#startDates.form__input(type='date', value=`${tour.startDates.getFullYear()}-${'0'+ (tour.startDates.getMonth() + 1)}-${'0' + tour.startDates.getDate()}`, min = `${tour.startDates.getFullYear()}-${'0'+ (tour.startDates.getMonth() + 1)}-${'0' + tour.startDates.getDate()}`, placeholder='Enter 1st start date of tour', required)
+        .form__group
+          label.form__label(for='name') Name
+          input#name.form__input(type='text', value=`${tour.name}` ,placeholder='Enter tour name', required)
+        .form__group
+          label.form__label(for='duration') Duration
+          input#duration.form__input(type='number', value=`${tour.duration}` , placeholder='Enter tour Duration', required)
+        .form__group
+          label.form__label(for='maxGroupSize') Max Group Size
+          input#maxGroupSize.form__input(type='number', value=`${tour.maxGroupSize}` , placeholder='Enter Max Group Size', required)
+        .form__group
+          label.form__label(for='difficulty') Difficulty
+          select(name='difficulty' placeholder="Difficulty" id="difficulty" value =`${tour.difficulty}` required)
+            option(value='easy') Easy
+            option(value='medium') Medium
+            option(value='difficult') Difficult
+        .form__group
+          label.form__label(for='price') Price
+          input#price.form__input(type='number', value=`${tour.price}` , placeholder='Enter Price for the tour', required)
+        .form__group
+          label.form__label(for='summary') Summary
+          input#summary.form__input(type='text', value=`${tour.summary}` , placeholder='Enter tour summary', required)
+        .form__group
+          label.form__label(for='description') Description
+          input#description.form__input(type='text', value=`${tour.description}` , placeholder='Enter tour description', required)
+        .form__group.mat-bt-md
+          label.form__label(for='imageCover') Image Cover (Select 1 image)
+          input#imageCover.form__input(type='file', accept='image/*', value=`${tour.imageCover}`, placeholder='Choose image cover')
+        .form__group.mat-bt-md
+          label.form__label(for='images') Tour Images (Select atleast 1 and max 3 images)
+          input#images.form__input(type='file', accept='image/*', value=`${tour.images}`, placeholder='Choose image for tour' multiple)
+        .form__group
+          label.form__label(for='locationInfo') Location
+          input#locationInfo.form__input(type='text', value=`${tour.locationInfo}`, placeholder='Enter the location of tour', required)
+        .form__group.mat-bt-md
+          label.form__label(for='locationImage') Location Image (Select 1 image)
+          input#locationImage.form__input(type='file', accept='image/*', value=`${tour.locationImage}` , placeholder='Choose location image')
+        .form__group
+          button.btn.btn--green Edit Tour
