@@ -403,6 +403,7 @@ if(reviewForm){
       const review = document.getElementById('review').value
       const rating = document.getElementById('rating').value
       let reviewCheck = review.match(/^[0-9]+$/) != null
+      if (!review.replace(/\s/g, '').length) {throw 'Review should not contain only spaces'}
       if(reviewCheck == true){
         throw 'Review cannot contain only numbers'
       }
