@@ -62,8 +62,8 @@ app.use("/travel-bliss/testimonials",testimonialsRoutes)
 
 
 app.all("*",(req,res,next)=>{
-    res.status(404).json({
-        message:`No such Route ${req.originalUrl} Found on server`
+    res.status(404).render('error',{
+        error:`No such Route ${req.originalUrl} Found on server`
     })
 })
 module.exports = app
